@@ -16,6 +16,9 @@
             <div>Result:
                 <div>{{ result }}</div>
             </div>
+            <audio style="display:none" id="welcome" preload="auto">
+                <source src="/japari.mp3" type="audio/mp3">
+            </audio>
         </div>
     </div>
 </template>
@@ -25,6 +28,7 @@
         data() {
             return {
                 image: '',
+                youkoso:'',
                 request: {
                     source_code: '',
                     language: 'おまかせ'
@@ -37,11 +41,20 @@
             }
         },
         created() {
-            $.get('http://localhost:8000/api/languagelist').then(
+            $.get('http://'+location.hostname+':8000/api/languagelist').then(
                     (data)=> {
                         this.$set(this, "extensions", Object.assign({"おまかせ": "おまかせ"}, (data)));
                     }
             );
+
+        },
+        watch:{
+            'request.source_code':(val)=>{
+                console.log(val);
+                if(val == "すごーい"){
+                    document.getElementById("welcome").play();
+                }
+            },
         },
         methods: {
             uploadImage(formData) {

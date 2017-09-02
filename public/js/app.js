@@ -44438,7 +44438,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/components/App.vue"
+Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/components/App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44497,7 +44497,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Top.vue"
+Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/pages/Top.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Top.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44550,7 +44550,7 @@ if(false) {
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(59)(undefined);
+exports = module.exports = __webpack_require__(43)(undefined);
 // imports
 
 
@@ -44561,7 +44561,88 @@ exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: blo
 
 
 /***/ }),
-/* 43 */,
+/* 43 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44845,11 +44926,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             image: '',
+            youkoso: '',
             request: {
                 source_code: '',
                 language: 'おまかせ'
@@ -44864,11 +44947,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        $.get('http://localhost:8000/api/languagelist').then(function (data) {
+        $.get('http://' + location.hostname + ':8000/api/languagelist').then(function (data) {
             _this.$set(_this, "extensions", Object.assign({ "おまかせ": "おまかせ" }, data));
         });
     },
 
+    watch: {
+        'request.source_code': function requestSource_code(val) {
+            console.log(val);
+            if (val == "すごーい") {
+                document.getElementById("welcome").play();
+            }
+        }
+    },
     methods: {
         uploadImage: function uploadImage(formData) {
             var _this2 = this;
@@ -45051,9 +45142,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "form"
     }
-  }, [_c('div', {
-    staticClass: "form-inner"
-  }, [_vm._v("\n                Language:\n                "), _c('select', {
+  }, [_vm._v("\n            Language:\n            "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -45076,8 +45165,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, _vm._l((_vm.extensions), function(text, val) {
     return _c('option', [_vm._v(_vm._s(text))])
-  }))]), _vm._v(" "), _c('input', {
-    staticClass: "form-inner",
+  })), _vm._v(" "), _c('input', {
     attrs: {
       "type": "file",
       "id": "file-select",
@@ -45087,7 +45175,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "change": _vm.toBlob
     }
   }), _vm._v(" "), _c('button', {
-    staticClass: "form-inner",
     attrs: {
       "type": "button",
       "disabled": !_vm.writed || _vm.ran
@@ -45098,7 +45185,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("Running")]), _vm._v(" "), _c('a', {
-    staticClass: "form-inner",
     attrs: {
       "href": "",
       "download": _vm.nowExtension === undefined ? 'result.txt' : 'result.' + _vm.nowExtension,
@@ -45139,8 +45225,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.image,
       "alt": ""
     }
-  })]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])])])])
-},staticRenderFns: []}
+  })]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])]), _vm._v(" "), _vm._m(0)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('audio', {
+    staticStyle: {
+      "display": "none"
+    },
+    attrs: {
+      "id": "welcome",
+      "preload": "auto"
+    }
+  }, [_c('source', {
+    attrs: {
+      "src": "/japari.mp3",
+      "type": "audio/mp3"
+    }
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -45166,7 +45267,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Capture.vue"
+Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/pages/Capture.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Capture.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45215,96 +45316,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
 
 /***/ })
 /******/ ]);
