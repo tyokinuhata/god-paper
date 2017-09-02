@@ -44642,11 +44642,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            image: ''
+            image: '',
+            request: {
+                language: '',
+                source_code: ''
+            }
         };
     },
 
@@ -44678,6 +44683,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.uploadImage(formData);
         },
         processImage: function processImage(imageLink) {
+            var _this2 = this;
+
             var subscriptionKey = '548a4be3988240449b841c5ada938667';
             var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
             var params = {
@@ -44695,11 +44702,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data: '{"url": ' + '"' + imageLink + '"}'
             }).done(function (data) {
                 $('#response-text-area').val(JSON.stringify(data, null, 2));
+                _this2.jsonFormatting(data);
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
                 errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
                 alert(errorString);
             });
+        },
+        jsonFormatting: function jsonFormatting(data) {
+            var sourceCode = '';
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = data.regions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var region = _step.value;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = region.lines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var line = _step2.value;
+                            var _iteratorNormalCompletion3 = true;
+                            var _didIteratorError3 = false;
+                            var _iteratorError3 = undefined;
+
+                            try {
+                                for (var _iterator3 = line.words[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                                    var word = _step3.value;
+
+                                    sourceCode += word.text + ' ';
+                                }
+                            } catch (err) {
+                                _didIteratorError3 = true;
+                                _iteratorError3 = err;
+                            } finally {
+                                try {
+                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                        _iterator3.return();
+                                    }
+                                } finally {
+                                    if (_didIteratorError3) {
+                                        throw _iteratorError3;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.request.source_code = sourceCode;
         }
     }
 });
@@ -45017,7 +45098,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "form"
     }
-  }, [_vm._v("\n            Language:\n            "), _vm._m(0), _vm._v(" "), _c('input', {
+  }, [_vm._v("\n            Language:\n            "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.request.language),
+      expression: "request.language"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.request.language = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option'), _vm._v(" "), _c('option', [_vm._v("C")]), _vm._v(" "), _c('option', [_vm._v("C#")]), _vm._v(" "), _c('option', [_vm._v("C++")]), _vm._v(" "), _c('option', [_vm._v("Java")]), _vm._v(" "), _c('option', [_vm._v("JavaScript")]), _vm._v(" "), _c('option', [_vm._v("PHP")]), _vm._v(" "), _c('option', [_vm._v("MySQL")]), _vm._v(" "), _c('option', [_vm._v("Swift")]), _vm._v(" "), _c('option', [_vm._v("おまかせ")])]), _vm._v(" "), _c('input', {
     attrs: {
       "type": "file",
       "id": "file-select"
@@ -45025,7 +45124,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "change": _vm.toBlob
     }
-  })]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     attrs: {
       "id": "image"
     }
@@ -45036,8 +45135,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('select', [_c('option', [_vm._v("C")]), _vm._v(" "), _c('option', [_vm._v("C#")]), _vm._v(" "), _c('option', [_vm._v("C++")]), _vm._v(" "), _c('option', [_vm._v("Java")]), _vm._v(" "), _c('option', [_vm._v("JavaScript")]), _vm._v(" "), _c('option', [_vm._v("PHP")]), _vm._v(" "), _c('option', [_vm._v("MySQL")]), _vm._v(" "), _c('option', [_vm._v("Swift")]), _vm._v(" "), _c('option', [_vm._v("おまかせ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     attrs: {
       "id": "textarea"
