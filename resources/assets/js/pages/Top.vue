@@ -3,13 +3,15 @@
         <div id="contents">
             <h1 class="God">God Paper</h1>
             <div id="form">
-                Language:
-                <select id="select-lang" v-model="request.language" @change="findExtension">
-                    <option v-for="(text,val) in extensions">{{text}}</option>
-                </select>
-                <input type="file" @change="toBlob" id="file-select">
-                <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Running</button>
-                <a href="" :download="'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
+                <div class="form-inner">
+                    Language:
+                    <select id="select-lang" v-model="request.language" @change="findExtension">
+                        <option v-for="(text,val) in extensions">{{text}}</option>
+                    </select>
+                </div>
+                <input class="form-inner" type="file" @change="toBlob" id="file-select">
+                <button class="form-inner" type="button" v-on:click="paizaRun(request.source_code, request.language)">Running</button>
+                <a class="form-inner" href="" :download="'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
             </div>
             <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
@@ -181,6 +183,15 @@
         max-width: 1280px;
         margin: 0 auto;
         padding: 0;
+        text-align: center;
+    }
+    .form-inner{
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 0 20px;
+        margin: 0;
+        width: auto;
+        height: 30px;
     }
 
 
