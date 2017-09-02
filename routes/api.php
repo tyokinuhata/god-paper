@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('create',['uses' => 'executionPaizaApiController@executionSourceCode']);
+
+Route::get('language',function(Request $request){
+    Storage::disk('local')->put('public/language', $request["code"]);
+
+    $text = exec("file storage/language");
+    $lang = config('column.language');
+
+    foreach ($lang as $key=>$value){
+        if( strpos($text,$key)){
+            return $value;
+        }
+    }
+    return "";
+});
+
