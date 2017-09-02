@@ -44649,7 +44649,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             image: '',
             request: {
-                language: '',
+                language: 'おまかせ',
                 source_code: ''
             }
         };
@@ -44701,8 +44701,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 type: 'POST',
                 data: '{"url": ' + '"' + imageLink + '"}'
             }).done(function (data) {
-                $('#response-text-area').val(JSON.stringify(data, null, 2));
-                _this2.jsonFormatting(data);
+                console.log();
+                $('#response-text-area').val(_this2.jsonFormatting(data), null, 2);
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
                 errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
@@ -44781,6 +44781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             this.request.source_code = sourceCode;
+            return sourceCode;
         }
     }
 });
@@ -45076,7 +45077,7 @@ exports = module.exports = __webpack_require__(44)(undefined);
 
 
 // module
-exports.push([module.i, "\n*[data-v-0cb63dd8] {\n  margin: 0;\n  padding: 0;\n}\n#contents[data-v-0cb63dd8] {\n  margin: 0 auto;\n  width: 70%;\n}\n#contents input[type='file'][data-v-0cb63dd8] {\n    display: inline-block;\n}\n#contents #textarea[data-v-0cb63dd8] {\n    display: inline-block;\n}\n#contents #image[data-v-0cb63dd8] {\n    display: inline-block;\n}\n#contents #response-text-area[data-v-0cb63dd8] {\n    display: block;\n    width: 580px;\n    height: 400px;\n}\n#contents #img[data-v-0cb63dd8] {\n    display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n#response-text-area[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n}\n", ""]);
 
 // exports
 
@@ -45116,7 +45117,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.request.language = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option'), _vm._v(" "), _c('option', [_vm._v("C")]), _vm._v(" "), _c('option', [_vm._v("C#")]), _vm._v(" "), _c('option', [_vm._v("C++")]), _vm._v(" "), _c('option', [_vm._v("Java")]), _vm._v(" "), _c('option', [_vm._v("JavaScript")]), _vm._v(" "), _c('option', [_vm._v("PHP")]), _vm._v(" "), _c('option', [_vm._v("MySQL")]), _vm._v(" "), _c('option', [_vm._v("Swift")]), _vm._v(" "), _c('option', [_vm._v("おまかせ")])]), _vm._v(" "), _c('input', {
+  }, [_c('option', [_vm._v("おまかせ")]), _vm._v(" "), _c('option', [_vm._v("C")]), _vm._v(" "), _c('option', [_vm._v("C#")]), _vm._v(" "), _c('option', [_vm._v("C++")]), _vm._v(" "), _c('option', [_vm._v("Java")]), _vm._v(" "), _c('option', [_vm._v("JavaScript")]), _vm._v(" "), _c('option', [_vm._v("PHP")]), _vm._v(" "), _c('option', [_vm._v("MySQL")]), _vm._v(" "), _c('option', [_vm._v("Swift")])]), _vm._v(" "), _c('input', {
     attrs: {
       "type": "file",
       "id": "file-select"
@@ -45124,7 +45125,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "change": _vm.toBlob
     }
-  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('button', {
+    attrs: {
+      "type": "button"
+    }
+  }, [_vm._v("実行")])]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "textarea"
+    }
+  }, [_vm._v("Response: "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.request.source_code),
+      expression: "request.source_code"
+    }],
+    attrs: {
+      "id": "response-text-area"
+    },
+    domProps: {
+      "value": (_vm.request.source_code)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.request.source_code = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "image"
     }
@@ -45134,17 +45162,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "alt": ""
     }
   })])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "textarea"
-    }
-  }, [_vm._v("Response: "), _c('textarea', {
-    attrs: {
-      "id": "response-text-area"
-    }
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
