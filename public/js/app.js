@@ -44555,7 +44555,7 @@ exports = module.exports = __webpack_require__(59)(undefined);
 
 
 // module
-exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n}\n", ""]);
+exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n  font-size: 20px;\n}\nh1[data-v-0cb63dd8] {\n  color: red;\n  font-size: 30px;\n  padding: 5px;\n  text-align: center;\n  border: 5px;\n}\n#select-lang[data-v-0cb63dd8] {\n  border-top: solid 1.7px #808080;\n  border-left: solid 1.7px #808080;\n}\nbody[data-v-0cb63dd8] {\n  background: #f33;\n}\n#container[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n#form[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n", ""]);
 
 // exports
 
@@ -44841,6 +44841,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45041,7 +45043,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "contents"
     }
-  }, [_c('h1', [_vm._v("God Paper")]), _vm._v(" "), _c('div', {
+  }, [_c('h1', {
+    staticClass: "God"
+  }, [_vm._v("God Paper")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "form"
     }
@@ -45052,6 +45056,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.request.language),
       expression: "request.language"
     }],
+    attrs: {
+      "id": "select-lang"
+    },
     on: {
       "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -45125,7 +45132,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.image,
       "alt": ""
     }
-  })]), _vm._v(" "), _c('div', [_vm._v("Result: "), _c('div', [_vm._v(_vm._s(_vm.result))])])])])
+  })]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

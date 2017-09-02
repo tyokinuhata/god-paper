@@ -1,10 +1,10 @@
 <template>
     <div id="page">
         <div id="contents">
-            <h1>God Paper</h1>
+            <h1 class="God">God Paper</h1>
             <div id="form">
                 Language:
-                <select v-model="request.language" @change="findExtension">
+                <select id="select-lang" v-model="request.language" @change="findExtension">
                     <option v-for="(text,val) in extensions">{{text}}</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select" :disabled="ran">
@@ -13,7 +13,9 @@
             </div>
             <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
-            <div>Result: <div>{{ result }}</div></div>
+            <div>Result:
+                <div>{{ result }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -36,8 +38,8 @@
         },
         created() {
             $.get('http://localhost:8000/api/languagelist').then(
-                    (data)=>{
-                        this.$set(this,"extensions",Object.assign({"おまかせ":"おまかせ"},(data)));
+                    (data)=> {
+                        this.$set(this, "extensions", Object.assign({"おまかせ": "おまかせ"}, (data)));
                     }
             );
         },
@@ -78,22 +80,22 @@
                 $.ajax({
                     url: url,
                     beforeSend: jqXHR => {
-                        jqXHR.setRequestHeader('Content-Type','application/json');
+                        jqXHR.setRequestHeader('Content-Type', 'application/json');
                         jqXHR.setRequestHeader('Ocp-Apim-Subscription-Key', subscriptionKey);
                     },
                     type: 'POST',
                     data: '{"url": ' + '"' + imageLink + '"}',
                 })
-                .done(data => {
-                    console.log();
-                    $('#response-textarea').val(this.jsonFormatting(data), null, 2);
-                })
-                .fail(function(jqXHR, textStatus, errorThrown) {
-                    var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
-                    errorString += (jqXHR.responseText === '') ? '' : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                        jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-                    alert(errorString);
-                });
+                        .done(data => {
+                            console.log();
+                            $('#response-textarea').val(this.jsonFormatting(data), null, 2);
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
+                            errorString += (jqXHR.responseText === '') ? '' : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                            alert(errorString);
+                        });
             },
             jsonFormatting(data) {
                 let sourceCode = '';
@@ -108,10 +110,10 @@
 
                 // ここから言語判別
 
-                $.get('http://localhost:8000/api/language?code='+encodeURIComponent(sourceCode)).then(
-                        (data)=>{
+                $.get('http://localhost:8000/api/language?code=' + encodeURIComponent(sourceCode)).then(
+                        (data)=> {
                             console.log(data);
-                            this.$set(this.request,"language",data);
+                            this.$set(this.request, "language", data);
                         }
                 );
 
@@ -132,11 +134,10 @@
                 code = encodeURIComponent(code);
                 lang = encodeURIComponent(lang.toLowerCase());
                 const postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang)
-                    .then(response => {
-                        this.result = response.data.stdout;
-                    })
-                    .catch(err => {
-
+                        .then(response => {
+                            this.result = response.data.stdout;
+                        })
+                        .catch(err => {
                     });
                 this.ran = true;
             }
@@ -149,5 +150,42 @@
         display: block;
         width: 580px;
         height: 400px;
+        font-size: 20px;
     }
+
+    h1 {
+        color: red;
+        font-size: 30px;
+        padding: 5px;
+        text-align: center;
+        border: 5px
+    }
+
+    #select-lang {
+        border-top: solid 1.7px #808080;
+        border-left: solid 1.7px #808080;
+    }
+
+    body {
+        background: #f33;
+    }
+
+    #container {
+        position: relative;
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    #form {
+        position: relative;
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+
 </style>
+
