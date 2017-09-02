@@ -44555,7 +44555,11 @@ exports = module.exports = __webpack_require__(59)(undefined);
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, "\nh1[data-v-0cb63dd8] {\n  color: #87cefa;\n  font-size: 64px;\n  text-align: center;\n}\n#form[data-v-0cb63dd8] {\n  width: 50%;\n  padding: 20px;\n  margin: 30px auto;\n  border: 2px #ccc solid;\n  border-radius: 3px;\n  background: #fff;\n  text-align: center;\n}\n#select-lang[data-v-0cb63dd8], #file-select[data-v-0cb63dd8], #run-btn[data-v-0cb63dd8] {\n  display: inline-block;\n  text-align: center;\n}\n#select-lang[data-v-0cb63dd8], #run-btn[data-v-0cb63dd8], #download-link[data-v-0cb63dd8] {\n  background: #fff;\n}\n#run-btn[data-v-0cb63dd8], #download-link[data-v-0cb63dd8] {\n  border-radius: 3px;\n}\n#run-btn[data-v-0cb63dd8] {\n  padding: 7px 10px;\n  border: 0;\n}\n#download-link[data-v-0cb63dd8] {\n  text-decoration: none;\n  padding: 10px;\n  color: #636b6f;\n}\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 500px;\n  height: 300px;\n  font-size: 20px;\n  margin: 0 auto;\n  border: 2px solid #ccc;\n  border-radius: 3px;\n}\n#text-image[data-v-0cb63dd8] {\n  width: 33%;\n  margin: 0 auto;\n}\n#result[data-v-0cb63dd8] {\n  margin: 0 auto;\n  margin-top: 30px;\n  width: 500px;\n  height: 300px;\n  border: 2px solid #ccc;\n  border-radius: 3px;\n  background: #fff;\n}\nspan[data-v-0cb63dd8] {\n  display: block;\n}\n", ""]);
+=======
+exports.push([module.i, "\n.loading[data-v-0cb63dd8] {\n  display: none;\n  opacity: 0;\n  transition: opacity 1s ease;\n  position: fixed;\n  width: 600px;\n  height: 600px;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: auto;\n}\n.loading img[data-v-0cb63dd8] {\n    width: 100%;\n}\n.active[data-v-0cb63dd8] {\n  display: block;\n  opacity: 1;\n}\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n  font-size: 20px;\n}\nh1[data-v-0cb63dd8] {\n  color: red;\n  font-size: 30px;\n  padding: 5px;\n  text-align: center;\n  border: 5px;\n}\n#select-lang[data-v-0cb63dd8] {\n  border-top: solid 1.7px #808080;\n  border-left: solid 1.7px #808080;\n}\nbody[data-v-0cb63dd8] {\n  background: #f33;\n}\n#container[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n#form[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n  text-align: center;\n}\n.form-inner[data-v-0cb63dd8] {\n  display: inline-block;\n  box-sizing: border-box;\n  padding: 0 20px;\n  margin: 0;\n  width: auto;\n  height: 30px;\n}\n#text-image[data-v-0cb63dd8] {\n  position: relative;\n  width: 33%;\n  max-width: 1280px;\n  margin: 0 auto;\n  flex-direction: row;\n}\n", ""]);
+>>>>>>> 7b8d266381fa92f99cf8b2aea5cd56a627736c7d
 
 // exports
 
@@ -44846,6 +44850,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+//
+//
+>>>>>>> 7b8d266381fa92f99cf8b2aea5cd56a627736c7d
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44868,7 +44880,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        $.get('http://' + location.hostname + ':8000/api/languagelist').then(function (data) {
+        $.get('http://' + location.hostname + ':' + location.port + '/api/languagelist').then(function (data) {
             _this.$set(_this, "extensions", Object.assign({ "おまかせ": "おまかせ" }, data));
         });
     },
@@ -44885,6 +44897,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         uploadImage: function uploadImage(formData) {
             var _this2 = this;
 
+            $('.loading').addClass('active');
             $.ajax({
                 url: 'https://api.imgur.com/3/image',
                 type: 'POST',
@@ -44894,6 +44907,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 },
                 data: formData,
                 success: function success(response) {
+                    $('.loading').removeClass('active');
                     _this2.processImage(response.data.link);
                     _this2.image = response.data.link;
                 },
@@ -44912,6 +44926,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         processImage: function processImage(imageLink) {
             var _this3 = this;
 
+            $('.loading').addClass('active');
             var subscriptionKey = '548a4be3988240449b841c5ada938667';
             var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
             var params = {
@@ -44928,6 +44943,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 type: 'POST',
                 data: '{"url": ' + '"' + imageLink + '"}'
             }).done(function (data) {
+                $('.loading').removeClass('active');
                 console.log();
                 $('#response-textarea').val(_this3.jsonFormatting(data), null, 2);
             }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -45012,14 +45028,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.request.source_code = sourceCode;
 
             // ここから言語判別
-
-            $.get('http://localhost:8000/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
+            $('.loading').addClass('active');
+            $.get('http://' + location.hostname + ':' + location.port + '/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
                 console.log(data);
                 _this4.$set(_this4.request, "language", data);
             });
 
             // 言語判別ここまで
-
+            $('.loading').removeClass('active');
             return sourceCode;
         },
         fileSave: function fileSave() {
@@ -45034,9 +45050,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         paizaRun: function paizaRun(code, lang) {
             var _this5 = this;
 
+            $('.loading').addClass('active');
             code = encodeURIComponent(code);
             lang = encodeURIComponent(lang.toLowerCase());
             var postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang).then(function (response) {
+                $('.loading').removeClass('active');
                 _this5.result = response.data.stdout;
             }).catch(function (err) {});
             this.ran = true;
@@ -45151,11 +45169,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.image,
       "alt": ""
     }
+<<<<<<< HEAD
   })])]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "result"
     }
   }, [_vm._v("Result: " + _vm._s(_vm.result))]), _vm._v(" "), _vm._m(0)])])
+=======
+  })])]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])
+>>>>>>> 7b8d266381fa92f99cf8b2aea5cd56a627736c7d
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('audio', {
     staticStyle: {
@@ -45169,6 +45191,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": "/japari.mp3",
       "type": "audio/mp3"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "loading"
+  }, [_c('img', {
+    attrs: {
+      "src": "/loading.gif",
+      "alt": "読み込み"
     }
   })])
 }]}

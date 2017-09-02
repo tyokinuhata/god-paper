@@ -19,6 +19,9 @@
             <audio style="display:none" id="welcome" preload="auto">
                 <source src="/japari.mp3" type="audio/mp3">
             </audio>
+            <div class="loading">
+                <img src="/loading.gif" alt="読み込み">
+            </div>
         </div>
     </div>
 </template>
@@ -43,12 +46,11 @@
             }
         },
         created() {
-            $.get('http://'+location.hostname+':8000/api/languagelist').then(
+            $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
                     (data)=> {
                         this.$set(this, "extensions", Object.assign({"おまかせ": "おまかせ"}, (data)));
                     }
             );
-
         },
         watch:{
             'request.source_code':(val)=>{
@@ -60,6 +62,7 @@
         },
         methods: {
             uploadImage(formData) {
+                $('.loading').addClass('active');
                 $.ajax({
                     url: 'https://api.imgur.com/3/image',
                     type: 'POST',
@@ -69,6 +72,7 @@
                     },
                     data: formData,
                     success: response => {
+                        $('.loading').removeClass('active');
                         this.processImage(response.data.link);
                         this.image = response.data.link;
                     },
@@ -85,6 +89,7 @@
                 this.writed = true;
             },
             processImage(imageLink) {
+                $('.loading').addClass('active');
                 let subscriptionKey = '548a4be3988240449b841c5ada938667';
                 let uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
                 let params = {
@@ -102,6 +107,7 @@
                     data: '{"url": ' + '"' + imageLink + '"}',
                 })
                         .done(data => {
+                            $('.loading').removeClass('active');
                             console.log();
                             $('#response-textarea').val(this.jsonFormatting(data), null, 2);
                         })
@@ -124,8 +130,8 @@
                 this.request.source_code = sourceCode;
 
                 // ここから言語判別
-
-                $.get('http://localhost:8000/api/language?code=' + encodeURIComponent(sourceCode)).then(
+                $('.loading').addClass('active');
+                $.get('http://'+location.hostname+':'+location.port+'/api/language?code=' + encodeURIComponent(sourceCode)).then(
                         (data)=> {
                             console.log(data);
                             this.$set(this.request, "language", data);
@@ -133,7 +139,7 @@
                 );
 
                 // 言語判別ここまで
-
+                $('.loading').removeClass('active');
                 return sourceCode;
             },
             fileSave() {
@@ -146,10 +152,12 @@
                 this.nowExtension = this.extensions[this.request.language];
             },
             paizaRun(code, lang) {
+                $('.loading').addClass('active');
                 code = encodeURIComponent(code);
                 lang = encodeURIComponent(lang.toLowerCase());
                 const postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang)
                         .then(response => {
+                            $('.loading').removeClass('active');
                             this.result = response.data.stdout;
                         })
                         .catch(err => {
@@ -161,6 +169,26 @@
 </script>
 
 <style lang="scss" scoped>
+    .loading{
+        display: none;
+        opacity: 0;
+        transition: opacity 1s ease;
+        position: fixed;
+        width: 600px;
+        height:600px;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin:auto;
+        img {
+            width: 100%;
+        }
+    }
+    .active{
+        display: block;
+        opacity: 1;
+    }
     h1 {
         color: #87cefa;
         font-size: 64px;
