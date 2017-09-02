@@ -16,12 +16,12 @@
                     <option>Swift</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select">
-                <button type="button">Running</button>
+                <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Running</button>
                 <a href="" :download="'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
             </div>
             <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
-            <div>{{ nowExtension }}</div>
+            <div>Result: <div>{{ result }}</div></div>
         </div>
     </div>
 </template>
@@ -32,8 +32,8 @@
             return {
                 image: '',
                 request: {
-                    language: 'おまかせ',
-                    source_code: ''
+                    source_code: '',
+                    language: 'おまかせ'
                 },
                 extensions: {
                     'C': 'c',
@@ -45,7 +45,8 @@
                     'MySQL': 'sql',
                     'Swift': 'swift'
                 },
-                nowExtension: 'hoge'
+                nowExtension: 'hoge',
+                result: ''
             }
         },
         methods: {
@@ -121,6 +122,17 @@
             },
             findExtension() {
                 this.nowExtension = this.extensions[this.request.language];
+            },
+            paizaRun(code, lang) {
+                code = encodeURIComponent(code);
+                lang = encodeURIComponent(lang.toLowerCase());
+                const postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang)
+                    .then(response => {
+                        this.result = response.data.stdout;
+                    })
+                    .catch(err => {
+
+                    });
             }
         }
     }
