@@ -26,7 +26,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped>git
     #player, #snapshot {
         width: 320px;
         height: 240px;

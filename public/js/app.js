@@ -44933,7 +44933,7 @@ exports = module.exports = __webpack_require__(44)(undefined);
 
 
 // module
-exports.push([module.i, "\n#player[data-v-0cb63dd8], #snapshot[data-v-0cb63dd8] {\n  width: 320px;\n  height: 240px;\n}\n", ""]);
+exports.push([module.i, "\ngit\n#player[data-v-0cb63dd8], #snapshot[data-v-0cb63dd8] {\n  width: 320px;\n  height: 240px;\n}\n", ""]);
 
 // exports
 
