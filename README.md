@@ -4,6 +4,7 @@
 
 ```
 $ composer install
+$ npm install
 
 # 初回のみ
 $ cp .env.example .env
