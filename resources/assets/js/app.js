@@ -15,8 +15,26 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./pages/Top.vue'));
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+import App from './components/App.vue';
+Vue.component('app', App);
+
+import Top from './pages/Top.vue';
+
+const routes = [
+    {
+        path: '/',
+        component: Top
+    }
+];
+
+const router = new VueRouter({
+    routes
+});
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router
 });
