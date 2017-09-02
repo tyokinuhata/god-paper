@@ -16,6 +16,11 @@
                     <option>Swift</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select">
+
+                <!-- kakimoto -->
+                <a href="" downlord>DLリンク</a>
+                <!-- ここまで -->
+
                 <button type="button">実行</button>
             </div>
             <div id="textarea">Response: <textarea id="response-text-area" v-model="request.source_code"></textarea></div>
