@@ -14,3 +14,7 @@ $ php artisan key:generate
 ## サーバーを立てる
 
 `php artisan serve`
+
+
+## License
+MIT
