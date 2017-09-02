@@ -9,6 +9,10 @@
         <div id="app">
             <app></app>
         </div>
+        <h1>アマチュア無線サイコー↑↑↑</h1>
+        <h1>アマチュア無線サイコー↑↑↑</h1>
+        <h1>アマチュア無線サイコー↑↑↑</h1>
+        <h1>アマチュア無線サイコー↑↑↑</h1>
         <script type="text/javascript">
             window.Laravel = window.Laravel || {};
             window.Laravel.csrfToken = "{{csrf_token()}}";
