@@ -72,6 +72,7 @@ class executionPaizaApiController extends Controller
      */
     private function get_details($getReqData)
     {
+        $getReqData = http_build_query($getReqData);
         $res = $this->client->get('http://api.paiza.io:80/runners/get_details?' . $getReqData);
 
         $getDetailsResult = json_decode($res->getbody(), true);
