@@ -44438,7 +44438,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/components/App.vue"
+Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/components/App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44497,7 +44497,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/pages/Top.vue"
+Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Top.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Top.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44550,99 +44550,22 @@ if(false) {
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(43)(undefined);
+exports = module.exports = __webpack_require__(59)(undefined);
 // imports
 
 
 // module
+<<<<<<< HEAD
+exports.push([module.i, "\nh1[data-v-0cb63dd8] {\n  color: #87cefa;\n  font-size: 64px;\n  text-align: center;\n}\n#form[data-v-0cb63dd8] {\n  width: 50%;\n  padding: 20px;\n  margin: 30px auto;\n  border: 2px #ccc solid;\n  border-radius: 3px;\n  background: #fff;\n  text-align: center;\n}\n#select-lang[data-v-0cb63dd8], #file-select[data-v-0cb63dd8], #run-btn[data-v-0cb63dd8] {\n  display: inline-block;\n  text-align: center;\n}\n#select-lang[data-v-0cb63dd8], #run-btn[data-v-0cb63dd8], #download-link[data-v-0cb63dd8] {\n  background: #fff;\n}\n#run-btn[data-v-0cb63dd8], #download-link[data-v-0cb63dd8] {\n  border-radius: 3px;\n}\n#run-btn[data-v-0cb63dd8] {\n  padding: 7px 10px;\n  border: 0;\n}\n#download-link[data-v-0cb63dd8] {\n  text-decoration: none;\n  padding: 10px;\n  color: #636b6f;\n}\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 500px;\n  height: 300px;\n  font-size: 20px;\n  margin: 0 auto;\n  border: 2px solid #ccc;\n  border-radius: 3px;\n}\n#text-image[data-v-0cb63dd8] {\n  width: 33%;\n  margin: 0 auto;\n}\n#result[data-v-0cb63dd8] {\n  margin: 0 auto;\n  margin-top: 30px;\n  width: 500px;\n  height: 300px;\n  border: 2px solid #ccc;\n  border-radius: 3px;\n  background: #fff;\n}\nspan[data-v-0cb63dd8] {\n  display: block;\n}\n", ""]);
+=======
 exports.push([module.i, "\n.loading[data-v-0cb63dd8] {\n  display: none;\n  opacity: 0;\n  transition: opacity 1s ease;\n  position: fixed;\n  width: 600px;\n  height: 600px;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: auto;\n}\n.loading img[data-v-0cb63dd8] {\n    width: 100%;\n}\n.active[data-v-0cb63dd8] {\n  display: block;\n  opacity: 1;\n}\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n  font-size: 20px;\n}\nh1[data-v-0cb63dd8] {\n  color: red;\n  font-size: 30px;\n  padding: 5px;\n  text-align: center;\n  border: 5px;\n}\n#select-lang[data-v-0cb63dd8] {\n  border-top: solid 1.7px #808080;\n  border-left: solid 1.7px #808080;\n}\nbody[data-v-0cb63dd8] {\n  background: #f33;\n}\n#container[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n#form[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n  text-align: center;\n}\n.form-inner[data-v-0cb63dd8] {\n  display: inline-block;\n  box-sizing: border-box;\n  padding: 0 20px;\n  margin: 0;\n  width: auto;\n  height: 30px;\n}\n#text-image[data-v-0cb63dd8] {\n  position: relative;\n  width: 33%;\n  max-width: 1280px;\n  margin: 0 auto;\n  flex-direction: row;\n}\n", ""]);
+>>>>>>> 7b8d266381fa92f99cf8b2aea5cd56a627736c7d
 
 // exports
 
 
 /***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
+/* 43 */,
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44927,11 +44850,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+<<<<<<< HEAD
+=======
 //
 //
 //
 //
 //
+>>>>>>> 7b8d266381fa92f99cf8b2aea5cd56a627736c7d
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45190,6 +45116,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('button', {
     attrs: {
       "type": "button",
+      "id": "run-btn",
       "disabled": !_vm.writed || _vm.ran
     },
     on: {
@@ -45237,12 +45164,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "image"
     }
-  }, [_vm._v("Image: "), _c('img', {
+  }, [_c('span', [_vm._v("Image:")]), _c('img', {
     attrs: {
       "src": _vm.image,
       "alt": ""
     }
+<<<<<<< HEAD
+  })])]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "result"
+    }
+  }, [_vm._v("Result: " + _vm._s(_vm.result))]), _vm._v(" "), _vm._m(0)])])
+=======
   })])]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])
+>>>>>>> 7b8d266381fa92f99cf8b2aea5cd56a627736c7d
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('audio', {
     staticStyle: {
@@ -45293,7 +45228,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/pages/Capture.vue"
+Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Capture.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Capture.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -45342,6 +45277,96 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ })
 /******/ ]);

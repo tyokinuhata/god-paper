@@ -8,16 +8,14 @@
                     <option v-for="(text,val) in extensions">{{text}}</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select" :disabled="ran">
-                <button type="button" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran">Running</button>
+                <button type="button" id="run-btn" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran">Running</button>
                 <a href="" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
             </div>
             <div id="text-image">
                 <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
-                <div id="image">Image: <img :src="image" alt=""></div>
+                <div id="image"><span>Image:</span><img :src="image" alt=""></div>
             </div>
-            <div>Result:
-                <div>{{ result }}</div>
-            </div>
+            <div id="result">Result: {{ result }}</div>
             <audio style="display:none" id="welcome" preload="auto">
                 <source src="/japari.mp3" type="audio/mp3">
             </audio>
@@ -171,7 +169,6 @@
 </script>
 
 <style lang="scss" scoped>
-
     .loading{
         display: none;
         opacity: 0;
@@ -192,64 +189,62 @@
         display: block;
         opacity: 1;
     }
-
+    h1 {
+        color: #87cefa;
+        font-size: 64px;
+        text-align: center;
+    }
+    #form {
+        width: 50%;
+        padding: 20px;
+        margin: 30px auto;
+        border: 2px #ccc solid;
+        border-radius: 3px;
+        background: #fff;
+        text-align: center;
+    }
+    #select-lang, #file-select, #run-btn {
+        display: inline-block;
+        text-align: center;
+    }
+    #select-lang, #run-btn, #download-link {
+        background: #fff;
+    }
+    #run-btn, #download-link {
+        border-radius: 3px;
+    }
+    #run-btn {
+        padding: 7px 10px;
+        border: 0;
+    }
+    #download-link {
+        text-decoration: none;
+        padding: 10px;
+        color: #636b6f
+    }
     #response-textarea {
         display: block;
-        width: 580px;
-        height: 400px;
+        width: 500px;
+        height: 300px;
         font-size: 20px;
-    }
-
-    h1 {
-        color: red;
-        font-size: 30px;
-        padding: 5px;
-        text-align: center;
-        border: 5px
-    }
-
-    #select-lang {
-        border-top: solid 1.7px #808080;
-        border-left: solid 1.7px #808080;
-    }
-
-    body {
-        background: #f33;
-    }
-
-    #container {
-        position: relative;
-        width: 100%;
-        max-width: 1280px;
         margin: 0 auto;
-        padding: 0;
-    }
-
-    #form {
-        position: relative;
-        width: 100%;
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0;
-        text-align: center;
-    }
-    .form-inner{
-        display: inline-block;
-        box-sizing: border-box;
-        padding: 0 20px;
-        margin: 0;
-        width: auto;
-        height: 30px;
+        border: 2px solid #ccc;
+        border-radius: 3px;
     }
     #text-image{
-        position: relative;
         width: 33%;
-        max-width: 1280px;
         margin: 0 auto;
-        flex-direction:row; 
     }
-    #text-area{
-
-
+    #result {
+        margin: 0 auto;
+        margin-top: 30px;
+        width: 500px;
+        height: 300px;
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        background: #fff;
+    }
+    span {
+        display: block;
     }
 </style>
