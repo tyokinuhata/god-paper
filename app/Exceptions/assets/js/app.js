@@ -22,11 +22,16 @@ import App from './components/App.vue';
 Vue.component('app', App);
 
 import Top from './pages/Top.vue';
+import Capture from './pages/Capture.vue';
 
 const routes = [
     {
         path: '/',
         component: Top
+    },
+    {
+        path: '/capture',
+        component: Capture
     }
 ];
 
