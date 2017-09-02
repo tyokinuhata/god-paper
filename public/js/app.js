@@ -44555,7 +44555,7 @@ exports = module.exports = __webpack_require__(43)(undefined);
 
 
 // module
-exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n  font-size: 20px;\n}\nh1[data-v-0cb63dd8] {\n  color: red;\n  font-size: 30px;\n  padding: 5px;\n  text-align: center;\n  border: 5px;\n}\n#select-lang[data-v-0cb63dd8] {\n  border-top: solid 1.7px #808080;\n  border-left: solid 1.7px #808080;\n}\nbody[data-v-0cb63dd8] {\n  background: #f33;\n}\n#container[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n#form[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n  text-align: center;\n}\n.form-inner[data-v-0cb63dd8] {\n  display: inline-block;\n  box-sizing: border-box;\n  padding: 0 20px;\n  margin: 0;\n  width: auto;\n  height: 30px;\n}\n", ""]);
+exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n  font-size: 20px;\n}\nh1[data-v-0cb63dd8] {\n  color: red;\n  font-size: 30px;\n  padding: 5px;\n  text-align: center;\n  border: 5px;\n}\n#select-lang[data-v-0cb63dd8] {\n  border-top: solid 1.7px #808080;\n  border-left: solid 1.7px #808080;\n}\nbody[data-v-0cb63dd8] {\n  background: #f33;\n}\n#container[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n#form[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n  text-align: center;\n}\n.form-inner[data-v-0cb63dd8] {\n  display: inline-block;\n  box-sizing: border-box;\n  padding: 0 20px;\n  margin: 0;\n  width: auto;\n  height: 30px;\n}\n#text-image[data-v-0cb63dd8] {\n  position: relative;\n  width: 33%;\n  max-width: 1280px;\n  margin: 0 auto;\n  flex-direction: row;\n}\n", ""]);
 
 // exports
 
@@ -44927,6 +44927,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44941,7 +44943,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             nowExtension: 'hoge',
             result: '',
             writed: false,
-            ran: false
+            ran: false,
+            reading: false,
+            running: false
         };
     },
     created: function created() {
@@ -45195,6 +45199,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Download")])]), _vm._v(" "), _c('div', {
     attrs: {
+      "id": "text-image"
+    }
+  }, [_c('div', {
+    attrs: {
       "id": "textarea"
     }
   }, [_vm._v("Response: "), _c('textarea', {
@@ -45225,7 +45233,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.image,
       "alt": ""
     }
-  })]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])]), _vm._v(" "), _vm._m(0)])])
+  })])]), _vm._v(" "), _c('div', [_vm._v("Result:\n            "), _c('div', [_vm._v(_vm._s(_vm.result))])]), _vm._v(" "), _vm._m(0)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('audio', {
     staticStyle: {
