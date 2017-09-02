@@ -870,7 +870,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(48);
 
 
 /***/ }),
@@ -44432,7 +44432,7 @@ var Component = __webpack_require__(8)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/components/App.vue"
+Component.options.__file = "/Users/kojimakeiji/Documents/god-paper/resources/assets/js/components/App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44477,13 +44477,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(57)
+  __webpack_require__(41)
 }
 var Component = __webpack_require__(8)(
   /* script */
-  __webpack_require__(52),
+  __webpack_require__(46),
   /* template */
-  __webpack_require__(59),
+  __webpack_require__(47),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -44491,7 +44491,7 @@ var Component = __webpack_require__(8)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Top.vue"
+Component.options.__file = "/Users/kojimakeiji/Documents/god-paper/resources/assets/js/pages/Top.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Top.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44515,15 +44515,47 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */,
-/* 42 */
-/***/ (function(module, exports) {
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(42);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(44)("23eb1e9f", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
-/* 43 */,
-/* 44 */
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(43)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n#response-text-area[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n  font-size: 20px;\n}\nh1[data-v-0cb63dd8] {\n  color: red;\n  font-size: 30px;\n  padding: 5px;\n  text-align: center;\n  border: 5px;\n}\n#select-lang[data-v-0cb63dd8] {\n  border-top: solid 1.7px #808080;\n  border-left: solid 1.7px #808080;\n}\nbody[data-v-0cb63dd8] {\n  background: #f33;\n}\n#container[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n#form[data-v-0cb63dd8] {\n  position: relative;\n  width: 100%;\n  max-width: 1280px;\n  margin: 0 auto;\n  padding: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 43 */
 /***/ (function(module, exports) {
 
 /*
@@ -44605,191 +44637,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            image: '',
-            request: {
-                language: 'おまかせ',
-                source_code: ''
-            }
-        };
-    },
-
-    methods: {
-        uploadImage: function uploadImage(formData) {
-            var _this = this;
-
-            $.ajax({
-                url: 'https://api.imgur.com/3/image',
-                type: 'POST',
-                datatype: 'json',
-                headers: {
-                    Authorization: 'Client-ID 3094230e774a0ff'
-                },
-                data: formData,
-                success: function success(response) {
-                    _this.processImage(response.data.link);
-                    _this.image = response.data.link;
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        },
-        toBlob: function toBlob() {
-            var blob = document.getElementById('file-select').files[0];
-            var formData = new FormData();
-            formData.append('image', blob);
-            this.uploadImage(formData);
-        },
-        processImage: function processImage(imageLink) {
-            var _this2 = this;
-
-            var subscriptionKey = '548a4be3988240449b841c5ada938667';
-            var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
-            var params = {
-                language: 'unk',
-                detectOrientation: true
-            };
-            var url = uriBase + "?" + $.param(params);
-            $.ajax({
-                url: url,
-                beforeSend: function beforeSend(jqXHR) {
-                    jqXHR.setRequestHeader('Content-Type', 'application/json');
-                    jqXHR.setRequestHeader('Ocp-Apim-Subscription-Key', subscriptionKey);
-                },
-                type: 'POST',
-                data: '{"url": ' + '"' + imageLink + '"}'
-            }).done(function (data) {
-                console.log();
-                $('#response-text-area').val(_this2.jsonFormatting(data), null, 2);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
-                errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-                alert(errorString);
-            });
-        },
-        jsonFormatting: function jsonFormatting(data) {
-            var sourceCode = '';
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = data.regions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var region = _step.value;
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
-
-                    try {
-                        for (var _iterator2 = region.lines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                            var line = _step2.value;
-                            var _iteratorNormalCompletion3 = true;
-                            var _didIteratorError3 = false;
-                            var _iteratorError3 = undefined;
-
-                            try {
-                                for (var _iterator3 = line.words[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                                    var word = _step3.value;
-
-                                    sourceCode += word.text + ' ';
-                                }
-                            } catch (err) {
-                                _didIteratorError3 = true;
-                                _iteratorError3 = err;
-                            } finally {
-                                try {
-                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                                        _iterator3.return();
-                                    }
-                                } finally {
-                                    if (_didIteratorError3) {
-                                        throw _iteratorError3;
-                                    }
-                                }
-                            }
-                        }
-                    } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
-                            }
-                        } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
-                            }
-                        }
-                    }
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            this.request.source_code = sourceCode;
-            return sourceCode;
-        }
-    }
-});
-
-/***/ }),
-/* 53 */,
-/* 54 */,
-/* 55 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -44808,7 +44656,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(56)
+var listToStyles = __webpack_require__(45)
 
 /*
 type StyleObject = {
@@ -45010,7 +44858,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 56 */
+/* 45 */
 /***/ (function(module, exports) {
 
 /**
@@ -45043,47 +44891,182 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-// load the styles
-var content = __webpack_require__(58);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(55)("23eb1e9f", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            image: '',
+            request: {
+                language: 'おまかせ',
+                source_code: ''
+            }
+        };
+    },
+
+    methods: {
+        uploadImage: function uploadImage(formData) {
+            var _this = this;
+
+            $.ajax({
+                url: 'https://api.imgur.com/3/image',
+                type: 'POST',
+                datatype: 'json',
+                headers: {
+                    Authorization: 'Client-ID 3094230e774a0ff'
+                },
+                data: formData,
+                success: function success(response) {
+                    _this.processImage(response.data.link);
+                    _this.image = response.data.link;
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        },
+        toBlob: function toBlob() {
+            var blob = document.getElementById('file-select').files[0];
+            var formData = new FormData();
+            formData.append('image', blob);
+            this.uploadImage(formData);
+        },
+        processImage: function processImage(imageLink) {
+            var _this2 = this;
+
+            var subscriptionKey = '548a4be3988240449b841c5ada938667';
+            var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
+            var params = {
+                language: 'unk',
+                detectOrientation: true
+            };
+            var url = uriBase + "?" + $.param(params);
+            $.ajax({
+                url: url,
+                beforeSend: function beforeSend(jqXHR) {
+                    jqXHR.setRequestHeader('Content-Type', 'application/json');
+                    jqXHR.setRequestHeader('Ocp-Apim-Subscription-Key', subscriptionKey);
+                },
+                type: 'POST',
+                data: '{"url": ' + '"' + imageLink + '"}'
+            }).done(function (data) {
+                console.log();
+                $('#response-text-area').val(_this2.jsonFormatting(data), null, 2);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
+                errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+        },
+        jsonFormatting: function jsonFormatting(data) {
+            var sourceCode = '';
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = data.regions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var region = _step.value;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = region.lines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var line = _step2.value;
+                            var _iteratorNormalCompletion3 = true;
+                            var _didIteratorError3 = false;
+                            var _iteratorError3 = undefined;
+
+                            try {
+                                for (var _iterator3 = line.words[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                                    var word = _step3.value;
+
+                                    sourceCode += word.text + ' ';
+                                }
+                            } catch (err) {
+                                _didIteratorError3 = true;
+                                _iteratorError3 = err;
+                            } finally {
+                                try {
+                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                        _iterator3.return();
+                                    }
+                                } finally {
+                                    if (_didIteratorError3) {
+                                        throw _iteratorError3;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.request.source_code = sourceCode;
+            return sourceCode;
+        }
+    }
+});
 
 /***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(44)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n#response-text-area[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 59 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -45095,7 +45078,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "contents"
     }
-  }, [_c('h1', [_vm._v("God Paper")]), _vm._v(" "), _c('div', {
+  }, [_c('h1', {
+    staticClass: "God"
+  }, [_vm._v("God Paper")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "form"
     }
@@ -45106,6 +45091,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.request.language),
       expression: "request.language"
     }],
+    attrs: {
+      "id": "select-lang"
+    },
     on: {
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -45119,8 +45107,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('option', [_vm._v("おまかせ")]), _vm._v(" "), _c('option', [_vm._v("C")]), _vm._v(" "), _c('option', [_vm._v("C#")]), _vm._v(" "), _c('option', [_vm._v("C++")]), _vm._v(" "), _c('option', [_vm._v("Java")]), _vm._v(" "), _c('option', [_vm._v("JavaScript")]), _vm._v(" "), _c('option', [_vm._v("PHP")]), _vm._v(" "), _c('option', [_vm._v("MySQL")]), _vm._v(" "), _c('option', [_vm._v("Swift")])]), _vm._v(" "), _c('input', {
     attrs: {
-      "type": "file",
-      "id": "file-select"
+      "type": "file"
     },
     on: {
       "change": _vm.toBlob
@@ -45170,6 +45157,12 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-0cb63dd8", module.exports)
   }
 }
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

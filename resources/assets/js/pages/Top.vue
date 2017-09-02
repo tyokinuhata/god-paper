@@ -1,10 +1,10 @@
 <template>
     <div id="page">
         <div id="contents">
-            <h1>God Paper</h1>
+            <h1 class="God" >God Paper</h1>
             <div id="form">
                 Language:
-                <select v-model="request.language">
+                <select id="select-lang" v-model="request.language">
                     <option>おまかせ</option>
                     <option>C</option>
                     <option>C#</option>
@@ -15,7 +15,7 @@
                     <option>MySQL</option>
                     <option>Swift</option>
                 </select>
-                <input type="file" @change="toBlob" id="file-select">
+                <input type="file" @change="toBlob">
                 <button type="button">実行</button>
             </div>
             <div id="textarea">Response: <textarea id="response-text-area" v-model="request.source_code"></textarea></div>
@@ -109,5 +109,37 @@
         display: block;
         width: 580px;
         height: 400px;
+        font-size: 20px;
     }
+    h1 {
+        color:red;
+        font-size:30px;
+        padding:5px;
+        text-align:center;
+        border:5px 
+    }
+    #select-lang {
+        border-top:solid 1.7px #808080;
+        border-left:solid 1.7px #808080;
+    }
+    body{
+        background: #f33;
+        }
+    #container {  
+        position: relative;  
+        width: 100%;
+        max-width:1280px;
+        margin: 0 auto;
+        padding: 0;
+    }
+    #form{
+        position: relative;
+        width: 100%;
+        max-width:1280px;
+        margin:0 auto;
+        padding:0;
+    }
+    
+    
 </style>
+
