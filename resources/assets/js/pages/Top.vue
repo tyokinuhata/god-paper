@@ -4,7 +4,7 @@
             <h1>God Paper</h1>
             <div id="form">
                 Language:
-                <select v-model="request.language">
+                <select v-model="request.language" @change="findExtension">
                     <option>おまかせ</option>
                     <option>C</option>
                     <option>C#</option>
@@ -16,15 +16,12 @@
                     <option>Swift</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select">
-
-                <!-- kakimoto -->
-                <a href="" downlord>DLリンク</a>
-                <!-- ここまで -->
-
-                <button type="button">実行</button>
+                <button type="button">Running</button>
+                <a href="" :download="'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
             </div>
-            <div id="textarea">Response: <textarea id="response-text-area" v-model="request.source_code"></textarea></div>
+            <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
+            <div>{{ nowExtension }}</div>
         </div>
     </div>
 </template>
@@ -37,7 +34,18 @@
                 request: {
                     language: 'おまかせ',
                     source_code: ''
-                }
+                },
+                extensions: {
+                    'C': 'c',
+                    'C++': 'cpp',
+                    'C#': 'cs',
+                    'Java': 'java',
+                    'JavaScript': 'js',
+                    'PHP': 'php',
+                    'MySQL': 'sql',
+                    'Swift': 'swift'
+                },
+                nowExtension: 'hoge'
             }
         },
         methods: {
@@ -84,7 +92,7 @@
                 })
                 .done(data => {
                     console.log();
-                    $('#response-text-area').val(this.jsonFormatting(data), null, 2);
+                    $('#response-textarea').val(this.jsonFormatting(data), null, 2);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
@@ -104,13 +112,22 @@
                 }
                 this.request.source_code = sourceCode;
                 return sourceCode;
+            },
+            fileSave() {
+                let text = document.getElementById('response-textarea').value;
+                let blob = new File([text], 'result.txt');
+                let downloadLink = document.getElementById('download-link');
+                downloadLink.href = window.URL.createObjectURL(blob);
+            },
+            findExtension() {
+                this.nowExtension = this.extensions[this.request.language];
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    #response-text-area {
+    #response-textarea {
         display: block;
         width: 580px;
         height: 400px;
