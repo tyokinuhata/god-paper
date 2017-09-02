@@ -1,10 +1,18 @@
 <template>
     <div id="page">
         <h1>God Paper</h1>
-        <button id="start-btn" v-on:click="start" v-if="!started">Start</button>
-        <button id="capture-btn" v-on:click="capture" v-if="started">Capture</button>
-        <video id="player" autoplay></video>
-        <canvas id="snapshot"></canvas>
+        <div>
+            <input type="text" value="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Atomist_quote_from_Democritus.png/338px-Atomist_quote_from_Democritus.png">
+            <button v-on:click="">Read Image</button>
+        </div>
+        <div>
+            Response:
+            <textarea width="580" height="400"></textarea>
+        </div>
+        <div>
+            Source Image:
+            <img src="" alt="">
+        </div>
     </div>
 </template>
 
@@ -12,22 +20,7 @@
     export default {
         data() {
             return {
-                started: false
-            }
-        },
-        methods: {
-            start() {
-                document.getElementById('player');
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(function(stream) {
-                        player.srcObject = stream;
-                    });
-                this.started = true;
-            },
-            capture() {
-                const snapshot = document.getElementById('snapshot');
-                const context = snapshot.getContext('2d');
-                context.drawImage(player, 0, 0, snapshot.width, snapshot.height);
+
             }
         }
     }

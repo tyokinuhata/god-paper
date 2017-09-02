@@ -44627,27 +44627,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
-            started: false
-        };
-    },
-
-    methods: {
-        start: function start() {
-            document.getElementById('player');
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
-                player.srcObject = stream;
-            });
-            this.started = true;
-        },
-        capture: function capture() {
-            var snapshot = document.getElementById('snapshot');
-            var context = snapshot.getContext('2d');
-            context.drawImage(player, 0, 0, snapshot.width, snapshot.height);
-        }
+        return {};
     }
 });
 
@@ -44956,31 +44947,31 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "page"
     }
-  }, [_c('h1', [_vm._v("God Paper")]), _vm._v(" "), (!_vm.started) ? _c('button', {
+  }, [_c('h1', [_vm._v("God Paper")]), _vm._v(" "), _c('div', [_c('input', {
     attrs: {
-      "id": "start-btn"
-    },
+      "type": "text",
+      "value": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Atomist_quote_from_Democritus.png/338px-Atomist_quote_from_Democritus.png"
+    }
+  }), _vm._v(" "), _c('button', {
     on: {
-      "click": _vm.start
+      "click": function($event) {}
     }
-  }, [_vm._v("Start")]) : _vm._e(), _vm._v(" "), (_vm.started) ? _c('button', {
+  }, [_vm._v("Read Image")])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_vm._v("\n        Response:\n        "), _c('textarea', {
     attrs: {
-      "id": "capture-btn"
-    },
-    on: {
-      "click": _vm.capture
-    }
-  }, [_vm._v("Capture")]) : _vm._e(), _vm._v(" "), _c('video', {
-    attrs: {
-      "id": "player",
-      "autoplay": ""
-    }
-  }), _vm._v(" "), _c('canvas', {
-    attrs: {
-      "id": "snapshot"
+      "width": "580",
+      "height": "400"
     }
   })])
-},staticRenderFns: []}
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_vm._v("\n        Source Image:\n        "), _c('img', {
+    attrs: {
+      "src": "",
+      "alt": ""
+    }
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
