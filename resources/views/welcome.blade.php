@@ -8,7 +8,7 @@
     <body>
         <div id="app">
             <example></example>
-        </div>
+        </div>aaaa
         <script type="text/javascript">
             window.Laravel = window.Laravel || {};
             window.Laravel.csrfToken = "{{csrf_token()}}";
