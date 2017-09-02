@@ -7,9 +7,9 @@
                 <select v-model="request.language" @change="findExtension">
                     <option v-for="(text,val) in extensions">{{text}}</option>
                 </select>
-                <input type="file" @change="toBlob" id="file-select">
-                <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Running</button>
-                <a href="" :download="'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
+                <input type="file" @change="toBlob" id="file-select" :disabled="ran">
+                <button type="button" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran">Running</button>
+                <a href="" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
             </div>
             <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
@@ -29,7 +29,9 @@
                 },
                 extensions: {},
                 nowExtension: 'hoge',
-                result: ''
+                result: '',
+                writed: false,
+                ran: false
             }
         },
         created() {
@@ -63,6 +65,7 @@
                 let formData = new FormData();
                 formData.append('image', blob);
                 this.uploadImage(formData);
+                this.writed = true;
             },
             processImage(imageLink) {
                 let subscriptionKey = '548a4be3988240449b841c5ada938667';
@@ -135,6 +138,7 @@
                     .catch(err => {
 
                     });
+                this.ran = true;
             }
         }
     }
