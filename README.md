@@ -18,3 +18,7 @@ $ php artisan key:generate
 
 ## License
 MIT
+
+
+## git clone
+- 柿元, 小島が各ローカルにクローン完了
