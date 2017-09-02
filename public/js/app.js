@@ -44951,7 +44951,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        $.get('http://' + location.hostname + ':8000/api/languagelist').then(function (data) {
+        $.get('http://' + location.hostname + ':' + location.port + '/api/languagelist').then(function (data) {
             _this.$set(_this, "extensions", Object.assign({ "おまかせ": "おまかせ" }, data));
         });
     },
@@ -45096,7 +45096,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             // ここから言語判別
 
-            $.get('http://localhost:8000/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
+            $.get('http://' + location.hostname + ':' + location.port + '/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
                 console.log(data);
                 _this4.$set(_this4.request, "language", data);
             });
