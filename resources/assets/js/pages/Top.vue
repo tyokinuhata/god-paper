@@ -184,6 +184,15 @@
         max-width: 1280px;
         margin: 0 auto;
         padding: 0;
+        text-align: center;
+    }
+    .form-inner{
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 0 20px;
+        margin: 0;
+        width: auto;
+        height: 30px;
     }
 
 
