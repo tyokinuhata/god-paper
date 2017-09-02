@@ -4,7 +4,8 @@
             <h1>God Paper</h1>
             <div id="form">
                 Language:
-                <select>
+                <select v-model="request.language">
+                    <option></option>
                     <option>C</option>
                     <option>C#</option>
                     <option>C++</option>
@@ -27,7 +28,11 @@
     export default {
         data() {
             return {
-                image: ''
+                image: '',
+                request: {
+                    language: '',
+                    source_code: ''
+                }
             }
         },
         methods: {
@@ -72,8 +77,9 @@
                     type: 'POST',
                     data: '{"url": ' + '"' + imageLink + '"}',
                 })
-                .done(function(data) {
+                .done(data => {
                     $('#response-text-area').val(JSON.stringify(data, null, 2));
+                    this.jsonFormatting(data);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
@@ -81,6 +87,17 @@
                         jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
                     alert(errorString);
                 });
+            },
+            jsonFormatting(data) {
+                let sourceCode = '';
+                for (let region of data.regions) {
+                    for (let line of region.lines) {
+                        for (let word of line.words) {
+                            sourceCode += word.text + ' ';
+                        }
+                    }
+                }
+                this.request.source_code = sourceCode;
             }
         }
     }
