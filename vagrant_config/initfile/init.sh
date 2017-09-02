@@ -25,10 +25,13 @@ sudo n latest
 # sudo apt -y install fish
 # curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
 
-echo "################### composer install #####################"
-curl -sS https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
-composer config -g repositories.packagist composer https://packagist.jp
+if [ -e /usr/local/bin/composer ]; then
+else
+    echo "################### composer install #####################"
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    composer config -g repositories.packagist composer https://packagist.jp
+fi
 
 # 任意
 # sudo apt -y upgrade
