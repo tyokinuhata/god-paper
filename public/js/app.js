@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(3);
+var bind = __webpack_require__(4);
 var isBuffer = __webpack_require__(18);
 
 /*global toString:true*/
@@ -397,10 +397,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(4);
+    adapter = __webpack_require__(5);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(4);
+    adapter = __webpack_require__(5);
   }
   return adapter;
 }
@@ -477,6 +477,103 @@ module.exports = defaults;
 /* 2 */
 /***/ (function(module, exports) {
 
+/* globals __VUE_SSR_CONTEXT__ */
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
 var g;
 
 // This works in non-strict mode
@@ -501,7 +598,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -519,7 +616,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -530,7 +627,7 @@ var settle = __webpack_require__(22);
 var buildURL = __webpack_require__(24);
 var parseHeaders = __webpack_require__(25);
 var isURLSameOrigin = __webpack_require__(26);
-var createError = __webpack_require__(5);
+var createError = __webpack_require__(6);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
@@ -706,7 +803,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -731,7 +828,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -743,7 +840,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -769,108 +866,11 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(50);
 
 
 /***/ }),
@@ -884,7 +884,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_App_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Top_vue__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_Top_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__pages_Top_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Capture_vue__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Capture_vue__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_Capture_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__pages_Capture_vue__);
 
 /**
@@ -18077,7 +18077,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(13)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(13)(module)))
 
 /***/ }),
 /* 13 */
@@ -30764,7 +30764,7 @@ module.exports = __webpack_require__(17);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(3);
+var bind = __webpack_require__(4);
 var Axios = __webpack_require__(19);
 var defaults = __webpack_require__(1);
 
@@ -30799,9 +30799,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(7);
+axios.Cancel = __webpack_require__(8);
 axios.CancelToken = __webpack_require__(34);
-axios.isCancel = __webpack_require__(6);
+axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -31151,7 +31151,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(5);
+var createError = __webpack_require__(6);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -31570,7 +31570,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
-var isCancel = __webpack_require__(6);
+var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(1);
 
 /**
@@ -31723,7 +31723,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(7);
+var Cancel = __webpack_require__(8);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -41907,7 +41907,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 37 */
@@ -44426,7 +44426,7 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(8)(
+var Component = __webpack_require__(2)(
   /* script */
   null,
   /* template */
@@ -44483,13 +44483,13 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(57)
+  __webpack_require__(41)
 }
-var Component = __webpack_require__(8)(
+var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(52),
+  __webpack_require__(46),
   /* template */
-  __webpack_require__(59),
+  __webpack_require__(47),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -44521,222 +44521,129 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */,
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(42);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(44)("23eb1e9f", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(43)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 43 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ }),
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            image: '',
-            request: {
-                language: 'おまかせ',
-                source_code: ''
-            },
-            extensions: {
-                'C': 'c',
-                'C++': 'cpp',
-                'C#': 'cs',
-                'Java': 'java',
-                'JavaScript': 'js',
-                'PHP': 'php',
-                'MySQL': 'sql',
-                'Swift': 'swift'
-            },
-            nowExtension: 'hoge'
-        };
-    },
-
-    methods: {
-        uploadImage: function uploadImage(formData) {
-            var _this = this;
-
-            $.ajax({
-                url: 'https://api.imgur.com/3/image',
-                type: 'POST',
-                datatype: 'json',
-                headers: {
-                    Authorization: 'Client-ID 3094230e774a0ff'
-                },
-                data: formData,
-                success: function success(response) {
-                    _this.processImage(response.data.link);
-                    _this.image = response.data.link;
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        },
-        toBlob: function toBlob() {
-            var blob = document.getElementById('file-select').files[0];
-            var formData = new FormData();
-            formData.append('image', blob);
-            this.uploadImage(formData);
-        },
-        processImage: function processImage(imageLink) {
-            var _this2 = this;
-
-            var subscriptionKey = '548a4be3988240449b841c5ada938667';
-            var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
-            var params = {
-                language: 'unk',
-                detectOrientation: true
-            };
-            var url = uriBase + "?" + $.param(params);
-            $.ajax({
-                url: url,
-                beforeSend: function beforeSend(jqXHR) {
-                    jqXHR.setRequestHeader('Content-Type', 'application/json');
-                    jqXHR.setRequestHeader('Ocp-Apim-Subscription-Key', subscriptionKey);
-                },
-                type: 'POST',
-                data: '{"url": ' + '"' + imageLink + '"}'
-            }).done(function (data) {
-                console.log();
-                $('#response-textarea').val(_this2.jsonFormatting(data), null, 2);
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
-                errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-                alert(errorString);
-            });
-        },
-        jsonFormatting: function jsonFormatting(data) {
-            var sourceCode = '';
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = data.regions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var region = _step.value;
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
-
-                    try {
-                        for (var _iterator2 = region.lines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                            var line = _step2.value;
-                            var _iteratorNormalCompletion3 = true;
-                            var _didIteratorError3 = false;
-                            var _iteratorError3 = undefined;
-
-                            try {
-                                for (var _iterator3 = line.words[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                                    var word = _step3.value;
-
-                                    sourceCode += word.text + ' ';
-                                }
-                            } catch (err) {
-                                _didIteratorError3 = true;
-                                _iteratorError3 = err;
-                            } finally {
-                                try {
-                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                                        _iterator3.return();
-                                    }
-                                } finally {
-                                    if (_didIteratorError3) {
-                                        throw _iteratorError3;
-                                    }
-                                }
-                            }
-                        }
-                    } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
-                            }
-                        } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
-                            }
-                        }
-                    }
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            this.request.source_code = sourceCode;
-            return sourceCode;
-        },
-        fileSave: function fileSave() {
-            var text = document.getElementById('response-textarea').value;
-            var blob = new File([text], 'result.txt');
-            var downloadLink = document.getElementById('download-link');
-            downloadLink.href = window.URL.createObjectURL(blob);
-        },
-        findExtension: function findExtension() {
-            this.nowExtension = this.extensions[this.request.language];
-        }
-    }
-});
-
-/***/ }),
-/* 53 */,
-/* 54 */,
-/* 55 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -44755,7 +44662,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(56)
+var listToStyles = __webpack_require__(45)
 
 /*
 type StyleObject = {
@@ -44957,7 +44864,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 56 */
+/* 45 */
 /***/ (function(module, exports) {
 
 /**
@@ -44990,47 +44897,214 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-// load the styles
-var content = __webpack_require__(58);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(55)("23eb1e9f", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0cb63dd8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Top.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            image: '',
+            request: {
+                source_code: '',
+                language: 'おまかせ'
+            },
+            extensions: {
+                'C': 'c',
+                'C++': 'cpp',
+                'C#': 'cs',
+                'Java': 'java',
+                'JavaScript': 'js',
+                'PHP': 'php',
+                'MySQL': 'sql',
+                'Swift': 'swift'
+            },
+            nowExtension: 'hoge',
+            result: ''
+        };
+    },
+
+    methods: {
+        uploadImage: function uploadImage(formData) {
+            var _this = this;
+
+            $.ajax({
+                url: 'https://api.imgur.com/3/image',
+                type: 'POST',
+                datatype: 'json',
+                headers: {
+                    Authorization: 'Client-ID 3094230e774a0ff'
+                },
+                data: formData,
+                success: function success(response) {
+                    _this.processImage(response.data.link);
+                    _this.image = response.data.link;
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        },
+        toBlob: function toBlob() {
+            var blob = document.getElementById('file-select').files[0];
+            var formData = new FormData();
+            formData.append('image', blob);
+            this.uploadImage(formData);
+        },
+        processImage: function processImage(imageLink) {
+            var _this2 = this;
+
+            var subscriptionKey = '548a4be3988240449b841c5ada938667';
+            var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
+            var params = {
+                language: 'unk',
+                detectOrientation: true
+            };
+            var url = uriBase + "?" + $.param(params);
+            $.ajax({
+                url: url,
+                beforeSend: function beforeSend(jqXHR) {
+                    jqXHR.setRequestHeader('Content-Type', 'application/json');
+                    jqXHR.setRequestHeader('Ocp-Apim-Subscription-Key', subscriptionKey);
+                },
+                type: 'POST',
+                data: '{"url": ' + '"' + imageLink + '"}'
+            }).done(function (data) {
+                console.log();
+                $('#response-textarea').val(_this2.jsonFormatting(data), null, 2);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
+                errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+        },
+        jsonFormatting: function jsonFormatting(data) {
+            var sourceCode = '';
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = data.regions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var region = _step.value;
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = region.lines[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var line = _step2.value;
+                            var _iteratorNormalCompletion3 = true;
+                            var _didIteratorError3 = false;
+                            var _iteratorError3 = undefined;
+
+                            try {
+                                for (var _iterator3 = line.words[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                                    var word = _step3.value;
+
+                                    sourceCode += word.text + ' ';
+                                }
+                            } catch (err) {
+                                _didIteratorError3 = true;
+                                _iteratorError3 = err;
+                            } finally {
+                                try {
+                                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                        _iterator3.return();
+                                    }
+                                } finally {
+                                    if (_didIteratorError3) {
+                                        throw _iteratorError3;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            this.request.source_code = sourceCode;
+            return sourceCode;
+        },
+        fileSave: function fileSave() {
+            var text = document.getElementById('response-textarea').value;
+            var blob = new File([text], 'result.txt');
+            var downloadLink = document.getElementById('download-link');
+            downloadLink.href = window.URL.createObjectURL(blob);
+        },
+        findExtension: function findExtension() {
+            this.nowExtension = this.extensions[this.request.language];
+        },
+        paizaRun: function paizaRun(code, lang) {
+            var _this3 = this;
+
+            code = encodeURIComponent(code);
+            lang = encodeURIComponent(lang.toLowerCase());
+            var postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang).then(function (response) {
+                _this3.result = response.data.stdout;
+            }).catch(function (err) {});
+        }
+    }
+});
 
 /***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(63)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n#response-textarea[data-v-0cb63dd8] {\n  display: block;\n  width: 580px;\n  height: 400px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 59 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -45075,6 +45149,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('button', {
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.paizaRun(_vm.request.source_code, _vm.request.language)
+      }
     }
   }, [_vm._v("Running")]), _vm._v(" "), _c('a', {
     attrs: {
@@ -45117,7 +45196,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.image,
       "alt": ""
     }
-  })]), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.nowExtension))])])])
+  })]), _vm._v(" "), _c('div', [_vm._v("Result: "), _c('div', [_vm._v(_vm._s(_vm.result))])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -45128,16 +45207,15 @@ if (false) {
 }
 
 /***/ }),
-/* 60 */,
-/* 61 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var Component = __webpack_require__(8)(
+var Component = __webpack_require__(2)(
   /* script */
   null,
   /* template */
-  __webpack_require__(62),
+  __webpack_require__(49),
   /* styles */
   null,
   /* scopeId */
@@ -45169,7 +45247,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 62 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -45190,86 +45268,10 @@ if (false) {
 }
 
 /***/ }),
-/* 63 */
+/* 50 */
 /***/ (function(module, exports) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
