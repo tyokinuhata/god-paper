@@ -44627,26 +44627,79 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            started: false
+            image: ''
         };
     },
 
     methods: {
-        start: function start() {
-            document.getElementById('player');
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
-                player.srcObject = stream;
+        uploadImage: function uploadImage(formData) {
+            var _this = this;
+
+            $.ajax({
+                url: 'https://api.imgur.com/3/image',
+                type: 'POST',
+                datatype: 'json',
+                headers: {
+                    Authorization: 'Client-ID 3094230e774a0ff'
+                },
+                data: formData,
+                success: function success(response) {
+                    _this.processImage(response.data.link);
+                    _this.image = response.data.link;
+                },
+                cache: false,
+                contentType: false,
+                processData: false
             });
-            this.started = true;
         },
-        capture: function capture() {
-            var snapshot = document.getElementById('snapshot');
-            var context = snapshot.getContext('2d');
-            context.drawImage(player, 0, 0, snapshot.width, snapshot.height);
+        toBlob: function toBlob() {
+            var blob = document.getElementById('file-select').files[0];
+            var formData = new FormData();
+            formData.append('image', blob);
+            this.uploadImage(formData);
+        },
+        processImage: function processImage(imageLink) {
+            var subscriptionKey = '548a4be3988240449b841c5ada938667';
+            var uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
+            var params = {
+                language: 'unk',
+                detectOrientation: true
+            };
+            var url = uriBase + "?" + $.param(params);
+            $.ajax({
+                url: url,
+                beforeSend: function beforeSend(jqXHR) {
+                    jqXHR.setRequestHeader('Content-Type', 'application/json');
+                    jqXHR.setRequestHeader('Ocp-Apim-Subscription-Key', subscriptionKey);
+                },
+                type: 'POST',
+                data: '{"url": ' + '"' + imageLink + '"}'
+            }).done(function (data) {
+                $('#response-text-area').val(JSON.stringify(data, null, 2));
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
+                errorString += jqXHR.responseText === '' ? '' : jQuery.parseJSON(jqXHR.responseText).message ? jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
         }
     }
 });
@@ -44942,7 +44995,7 @@ exports = module.exports = __webpack_require__(44)(undefined);
 
 
 // module
-exports.push([module.i, "\n#player[data-v-0cb63dd8], #snapshot[data-v-0cb63dd8] {\n  width: 320px;\n  height: 240px;\n}\n", ""]);
+exports.push([module.i, "\n*[data-v-0cb63dd8] {\n  margin: 0;\n  padding: 0;\n}\n#contents[data-v-0cb63dd8] {\n  margin: 0 auto;\n  width: 70%;\n}\n#contents input[type='file'][data-v-0cb63dd8] {\n    display: inline-block;\n}\n#contents #textarea[data-v-0cb63dd8] {\n    display: inline-block;\n}\n#contents #image[data-v-0cb63dd8] {\n    display: inline-block;\n}\n#contents #response-text-area[data-v-0cb63dd8] {\n    display: block;\n    width: 580px;\n    height: 400px;\n}\n#contents #img[data-v-0cb63dd8] {\n    display: inline-block;\n}\n", ""]);
 
 // exports
 
@@ -44956,31 +45009,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "page"
     }
-  }, [_c('h1', [_vm._v("God Paper")]), _vm._v(" "), (!_vm.started) ? _c('button', {
+  }, [_c('div', {
     attrs: {
-      "id": "start-btn"
+      "id": "contents"
+    }
+  }, [_c('h1', [_vm._v("God Paper")]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "form"
+    }
+  }, [_vm._v("\n            Language:\n            "), _vm._m(0), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "file",
+      "id": "file-select"
     },
     on: {
-      "click": _vm.start
+      "change": _vm.toBlob
     }
-  }, [_vm._v("Start")]) : _vm._e(), _vm._v(" "), (_vm.started) ? _c('button', {
+  })]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
     attrs: {
-      "id": "capture-btn"
-    },
-    on: {
-      "click": _vm.capture
+      "id": "image"
     }
-  }, [_vm._v("Capture")]) : _vm._e(), _vm._v(" "), _c('video', {
+  }, [_vm._v("Image: "), _c('img', {
     attrs: {
-      "id": "player",
-      "autoplay": ""
+      "src": _vm.image,
+      "alt": ""
     }
-  }), _vm._v(" "), _c('canvas', {
+  })])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('select', [_c('option', [_vm._v("C")]), _vm._v(" "), _c('option', [_vm._v("C#")]), _vm._v(" "), _c('option', [_vm._v("C++")]), _vm._v(" "), _c('option', [_vm._v("Java")]), _vm._v(" "), _c('option', [_vm._v("JavaScript")]), _vm._v(" "), _c('option', [_vm._v("PHP")]), _vm._v(" "), _c('option', [_vm._v("MySQL")]), _vm._v(" "), _c('option', [_vm._v("Swift")]), _vm._v(" "), _c('option', [_vm._v("おまかせ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     attrs: {
-      "id": "snapshot"
+      "id": "textarea"
+    }
+  }, [_vm._v("Response: "), _c('textarea', {
+    attrs: {
+      "id": "response-text-area"
     }
   })])
-},staticRenderFns: []}
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
