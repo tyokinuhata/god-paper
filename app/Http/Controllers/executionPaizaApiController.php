@@ -19,6 +19,11 @@ class executionPaizaApiController extends Controller
         $this->client = new Client();
     }
 
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function executionSourceCode(Request $request)
     {
         $postResult       = $this->create($request);

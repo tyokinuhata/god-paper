@@ -27,10 +27,14 @@ Route::get('language',function(Request $request){
     $lang = config('column.language');
 
     foreach ($lang as $key=>$value){
-        if( strpos($text,$key)){
+        if( strpos($text," ".$key." ")){
             return $value;
         }
     }
     return "";
+});
+
+Route::get('languagelist',function(){
+   return config('column.language');
 });
 

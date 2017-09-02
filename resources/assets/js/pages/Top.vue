@@ -5,15 +5,7 @@
             <div id="form">
                 Language:
                 <select v-model="request.language" @change="findExtension">
-                    <option>おまかせ</option>
-                    <option>C</option>
-                    <option>C#</option>
-                    <option>C++</option>
-                    <option>Java</option>
-                    <option>JavaScript</option>
-                    <option>PHP</option>
-                    <option>MySQL</option>
-                    <option>Swift</option>
+                    <option v-for="(text,val) in extensions">{{text}}</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select">
                 <button type="button">Running</button>
@@ -35,18 +27,16 @@
                     language: 'おまかせ',
                     source_code: ''
                 },
-                extensions: {
-                    'C': 'c',
-                    'C++': 'cpp',
-                    'C#': 'cs',
-                    'Java': 'java',
-                    'JavaScript': 'js',
-                    'PHP': 'php',
-                    'MySQL': 'sql',
-                    'Swift': 'swift'
-                },
+                extensions: {},
                 nowExtension: 'hoge'
             }
+        },
+        created() {
+            $.get('http://localhost:8000/api/languagelist').then(
+                    (data)=>{
+                        this.$set(this,"extensions",Object.assign({"おまかせ":"おまかせ"},(data)));
+                    }
+            );
         },
         methods: {
             uploadImage(formData) {
@@ -111,6 +101,18 @@
                     }
                 }
                 this.request.source_code = sourceCode;
+
+                // ここから言語判別
+
+                $.get('http://localhost:8000/api/language?code='+encodeURIComponent(sourceCode)).then(
+                        (data)=>{
+                            console.log(data);
+                            this.$set(this.request,"language",data);
+                        }
+                );
+
+                // 言語判別ここまで
+
                 return sourceCode;
             },
             fileSave() {
