@@ -11,8 +11,10 @@
                 <button type="button" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran">Running</button>
                 <a href="" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
             </div>
-            <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
-            <div id="image">Image: <img :src="image" alt=""></div>
+            <div id="text-image">
+                <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
+                <div id="image">Image: <img :src="image" alt=""></div>
+            </div>
             <div>Result:
                 <div>{{ result }}</div>
             </div>
@@ -195,5 +197,16 @@
         margin: 0;
         width: auto;
         height: 30px;
+    }
+    #text-image{
+        position: relative;
+        width: 33%;
+        max-width: 1280px;
+        margin: 0 auto;
+        flex-direction:row; 
+    }
+    #text-area{
+
+
     }
 </style>
