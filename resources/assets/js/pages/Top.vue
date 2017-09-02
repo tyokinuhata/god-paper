@@ -25,7 +25,7 @@
                 this.started = true;
             },
             capture() {
-                const snapshot = document.getElementById('snapshot');
+                const snapshot = document.getElementById('player');
                 const context = snapshot.getContext('2d');
                 context.drawImage(player, 0, 0, snapshot.width, snapshot.height);
             }
