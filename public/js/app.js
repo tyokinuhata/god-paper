@@ -44856,7 +44856,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             nowExtension: 'hoge',
             result: '',
             writed: false,
-            ran: false
+            ran: false,
+            reading: false,
+            running: false
         };
     },
     created: function created() {

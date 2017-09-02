@@ -33,7 +33,9 @@
                 nowExtension: 'hoge',
                 result: '',
                 writed: false,
-                ran: false
+                ran: false,
+                reading: false,
+                running: false
             }
         },
         created() {
@@ -185,7 +187,4 @@
         margin: 0 auto;
         padding: 0;
     }
-
-
 </style>
-
