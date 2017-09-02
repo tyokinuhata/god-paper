@@ -45,7 +45,7 @@
             }
         },
         created() {
-            $.get('http://'+location.hostname+':8000/api/languagelist').then(
+            $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
                     (data)=> {
                         this.$set(this, "extensions", Object.assign({"おまかせ": "おまかせ"}, (data)));
                     }
@@ -127,7 +127,7 @@
 
                 // ここから言語判別
 
-                $.get('http://'+location.hostname+':8000/api/language?code=' + encodeURIComponent(sourceCode)).then(
+                $.get('http://'+location.hostname+':'+location.port+'/api/language?code=' + encodeURIComponent(sourceCode)).then(
                         (data)=> {
                             console.log(data);
                             this.$set(this.request, "language", data);
