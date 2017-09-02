@@ -5,9 +5,12 @@ echo "##########################################################"
 echo ""
 echo "####################### apt update #######################"
 sudo apt update
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
 sudo apt -y install curl wget
 sudo apt -y install vim
-sudo apt -y install php7.0 php7.0-mysql php7.0-dev php7.0-fpm php7.0-mbstring
+
+sudo apt -y install php7.1 php7.1-mysql php7.1-dev php7.1-fpm php7.1-mbstring php7.1-cli
 #sudo apt -y install mysql-server mysql-client
 sudo apt -y install apache2
 sudo apt -y install ruby
