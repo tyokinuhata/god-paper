@@ -44928,11 +44928,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             image: '',
             request: {
-                language: 'おまかせ',
-                source_code: ''
+                source_code: '',
+                language: 'おまかせ'
             },
             extensions: {},
-            nowExtension: 'hoge'
+            nowExtension: 'hoge',
+            result: ''
         };
     },
     created: function created() {
@@ -45091,6 +45092,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         findExtension: function findExtension() {
             this.nowExtension = this.extensions[this.request.language];
+        },
+        paizaRun: function paizaRun(code, lang) {
+            var _this5 = this;
+
+            code = encodeURIComponent(code);
+            lang = encodeURIComponent(lang.toLowerCase());
+            var postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang).then(function (response) {
+                _this5.result = response.data.stdout;
+            }).catch(function (err) {});
         }
     }
 });
@@ -45143,6 +45153,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('button', {
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.paizaRun(_vm.request.source_code, _vm.request.language)
+      }
     }
   }, [_vm._v("Running")]), _vm._v(" "), _c('a', {
     attrs: {
@@ -45185,7 +45200,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.image,
       "alt": ""
     }
-  })]), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.nowExtension))])])])
+  })]), _vm._v(" "), _c('div', [_vm._v("Result: "), _c('div', [_vm._v(_vm._s(_vm.result))])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
