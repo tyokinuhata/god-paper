@@ -45096,7 +45096,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             // ここから言語判別
 
-            $.get('http://localhost:8000/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
+            $.get('http://' + location.hostname + ':8000/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
                 console.log(data);
                 _this4.$set(_this4.request, "language", data);
             });

@@ -127,7 +127,7 @@
 
                 // ここから言語判別
 
-                $.get('http://localhost:8000/api/language?code=' + encodeURIComponent(sourceCode)).then(
+                $.get('http://'+location.hostname+':8000/api/language?code=' + encodeURIComponent(sourceCode)).then(
                         (data)=> {
                             console.log(data);
                             this.$set(this.request, "language", data);
