@@ -4,7 +4,8 @@
             <h1>God Paper</h1>
             <div id="form">
                 Language:
-                <select>
+                <select v-model="request.language">
+                    <option>おまかせ</option>
                     <option>C</option>
                     <option>C#</option>
                     <option>C++</option>
@@ -13,11 +14,11 @@
                     <option>PHP</option>
                     <option>MySQL</option>
                     <option>Swift</option>
-                    <option>おまかせ</option>
                 </select>
                 <input type="file" @change="toBlob" id="file-select">
+                <button type="button">実行</button>
             </div>
-            <div id="textarea">Response: <textarea id="response-text-area"></textarea></div>
+            <div id="textarea">Response: <textarea id="response-text-area" v-model="request.source_code"></textarea></div>
             <div id="image">Image: <img :src="image" alt=""></div>
         </div>
     </div>
@@ -27,7 +28,11 @@
     export default {
         data() {
             return {
-                image: ''
+                image: '',
+                request: {
+                    language: 'おまかせ',
+                    source_code: ''
+                }
             }
         },
         methods: {
@@ -72,8 +77,9 @@
                     type: 'POST',
                     data: '{"url": ' + '"' + imageLink + '"}',
                 })
-                .done(function(data) {
-                    $('#response-text-area').val(JSON.stringify(data, null, 2));
+                .done(data => {
+                    console.log();
+                    $('#response-text-area').val(this.jsonFormatting(data), null, 2);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
@@ -81,35 +87,27 @@
                         jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
                     alert(errorString);
                 });
+            },
+            jsonFormatting(data) {
+                let sourceCode = '';
+                for (let region of data.regions) {
+                    for (let line of region.lines) {
+                        for (let word of line.words) {
+                            sourceCode += word.text + ' ';
+                        }
+                    }
+                }
+                this.request.source_code = sourceCode;
+                return sourceCode;
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    #contents {
-        margin: 0 auto;
-        width: 70%;
-        input[type='file'] {
-            display: inline-block;
-        }
-        #textarea {
-            display: inline-block;
-        }
-        #image {
-            display: inline-block;
-        }
-        #response-text-area {
-            display: block;
-            width: 580px;
-            height: 400px;
-        }
-        #img {
-            display: inline-block;
-        }
+    #response-text-area {
+        display: block;
+        width: 580px;
+        height: 400px;
     }
 </style>
