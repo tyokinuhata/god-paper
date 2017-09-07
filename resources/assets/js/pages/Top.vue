@@ -19,6 +19,9 @@
             <audio style="display:none" id="welcome" preload="auto">
                 <source src="/japari.mp3" type="audio/mp3">
             </audio>
+            <audio style="display:none" id="great" preload="auto">
+                <source src="/sugoi.mp3" type="audio/mp3">
+            </audio>
             <div class="loading">
                 <img src="/loading.gif" alt="読み込み">
             </div>
@@ -54,10 +57,13 @@
         },
         watch:{
             'request.source_code':(val)=>{
+                document.getElementById("great").currentTime = 0;
+
                 console.log(val);
                 if(val == "すごーい"){
                     document.getElementById("welcome").play();
                 }
+                document.getElementById("great").play();
             },
         },
         methods: {

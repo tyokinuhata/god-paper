@@ -44438,7 +44438,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/components/App.vue"
+Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/components/App.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] App.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44497,7 +44497,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Top.vue"
+Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/pages/Top.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Top.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -44930,6 +44930,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44959,10 +44962,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     watch: {
         'request.source_code': function requestSource_code(val) {
+            document.getElementById("great").currentTime = 0;
+
             console.log(val);
             if (val == "すごーい") {
                 document.getElementById("welcome").play();
             }
+            document.getElementById("great").play();
         }
     },
     methods: {
@@ -45245,7 +45251,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "result"
     }
-  }, [_vm._v("Result: " + _vm._s(_vm.result))]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])])
+  }, [_vm._v("Result: " + _vm._s(_vm.result))]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('audio', {
     staticStyle: {
@@ -45258,6 +45264,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('source', {
     attrs: {
       "src": "/japari.mp3",
+      "type": "audio/mp3"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('audio', {
+    staticStyle: {
+      "display": "none"
+    },
+    attrs: {
+      "id": "great",
+      "preload": "auto"
+    }
+  }, [_c('source', {
+    attrs: {
+      "src": "/sugoi.mp3",
       "type": "audio/mp3"
     }
   })])
@@ -45296,7 +45317,7 @@ var Component = __webpack_require__(2)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/tyokinuhata/index/workspace/god-paper/resources/assets/js/pages/Capture.vue"
+Component.options.__file = "/Users/unilorn/Documents/ITcreate/god-paper/resources/assets/js/pages/Capture.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Capture.vue: functional components are not supported with templates, they should use render functions.")}
 
