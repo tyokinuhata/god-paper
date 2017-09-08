@@ -44983,6 +44983,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -45012,10 +45015,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     watch: {
         'request.source_code': function requestSource_code(val) {
+            document.getElementById("great").currentTime = 0;
+
             console.log(val);
             if (val === 'すごーい') {
                 document.getElementById('welcome').play();
             }
+            document.getElementById("great").play();
         }
     },
     methods: {
@@ -45283,7 +45289,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "results"
   }, [_vm._v("\n            Result:\n            "), _c('div', {
     staticClass: "result"
-  }, [_vm._v(_vm._s(_vm.result))])])]), _vm._v(" "), _vm._m(0)])
+  }, [_vm._v(_vm._s(_vm.result))])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('audio', {
     staticStyle: {
@@ -45296,6 +45302,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('source', {
     attrs: {
       "src": "/japari.mp3",
+      "type": "audio/mp3"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('audio', {
+    staticStyle: {
+      "display": "none"
+    },
+    attrs: {
+      "id": "great",
+      "preload": "auto"
+    }
+  }, [_c('source', {
+    attrs: {
+      "src": "/sugoi.mp3",
       "type": "audio/mp3"
     }
   })])

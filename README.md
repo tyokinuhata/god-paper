@@ -14,6 +14,8 @@ $ php artisan key:generate
 
 ## サーバーを立てる
 
+`npm run build`
+`npm run watch`
 `php artisan serve`
 
 
