@@ -1,47 +1,47 @@
 <template>
-        <div class="container">
-            <div class="header">
-                <h1>God Paper</h1>
-                <ul>
-                    <li>
-                        <select v-model="request.language" @change="findExtension">
-                            <option v-for="(text, val) in extensions">{{ text }}</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label for="image-select">Image Select</label>
-                        <input type="file" id="image-select" @change="toBlob">
-                    </li>
-                    <li><button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button></li>
-                    <li><a href="" id="download-link" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" v-on:click="fileSave">Download</a></li>
-                </ul>
-            </div>
-            <div class="content">
-                <div class="sources">
-                    <div class="source-code">
-                        <textarea id="response-data" placeholder="Here your code!" v-model="request.source_code"></textarea>
-                    </div>
-                    <div class="source-image">
-                        <div>
-                            <img :src="image" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="results">
-                    Result:
-                    <div class="result">{{ result }}</div>
-                </div>
-            </div>
-            <audio style="display:none" id="welcome" preload="auto">
-                <source src="/japari.mp3" type="audio/mp3">
-            </audio>
-            <audio style="display:none" id="great" preload="auto">
-                <source src="/sugoi.mp3" type="audio/mp3">
-            </audio>
-            <!--<div class="loading">-->
-            <!--<img src="/loading.gif" alt="読み込み">-->
-            <!--</div>-->
+    <div class="container">
+        <div class="header">
+            <h1>God Paper</h1>
+            <ul>
+                <li>
+                    <select v-model="request.language" @change="findExtension">
+                        <option v-for="(text, val) in extensions">{{ text }}</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="image-select">Image Select</label>
+                    <input type="file" id="image-select" @change="toBlob">
+                </li>
+                <li><button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button></li>
+                <li><a href="" id="download-link" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" v-on:click="fileSave">Download</a></li>
+            </ul>
         </div>
+        <div class="content">
+            <div class="sources">
+                <div class="source-code">
+                    <textarea id="response-data" placeholder="Here your code!" v-model="request.source_code"></textarea>
+                </div>
+                <div class="source-image">
+                    <div>
+                        <img :src="image" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="results">
+                Result:
+                <div class="result">{{ result }}</div>
+            </div>
+        </div>
+        <audio style="display:none" id="welcome" preload="auto">
+            <source src="/japari.mp3" type="audio/mp3">
+        </audio>
+        <audio style="display:none" id="great" preload="auto">
+            <source src="/sugoi.mp3" type="audio/mp3">
+        </audio>
+        <!--<div class="loading">-->
+        <!--<img src="/loading.gif" alt="読み込み">-->
+        <!--</div>-->
+    </div>
 </template>
 
 <script>
@@ -65,9 +65,9 @@
         },
         created() {
             $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
-                    (data)=> {
-                        this.$set(this, 'extensions', Object.assign({'おまかせ': 'おまかせ'}, (data)));
-                    }
+                (data)=> {
+                    this.$set(this, 'extensions', Object.assign({'おまかせ': 'おまかせ'}, (data)));
+                }
             );
         },
         watch:{
@@ -127,17 +127,17 @@
                     type: 'POST',
                     data: '{"url": ' + '"' + imageLink + '"}',
                 })
-                        .done(data => {
-                            $('.loading').removeClass('active');
-                            console.log();
-                            $('#response-textarea').val(this.jsonFormatting(data), null, 2);
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
-                            errorString += (jqXHR.responseText === '') ? '' : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-                            alert(errorString);
-                        });
+                    .done(data => {
+                        $('.loading').removeClass('active');
+                        console.log();
+                        $('#response-textarea').val(this.jsonFormatting(data), null, 2);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        var errorString = (errorThrown === '') ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
+                        errorString += (jqXHR.responseText === '') ? '' : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                            jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                        alert(errorString);
+                    });
             },
             jsonFormatting(data) {
                 let sourceCode = '';
@@ -153,10 +153,10 @@
                 // ここから言語判別
                 $('.loading').addClass('active');
                 $.get('http://'+location.hostname+':'+location.port+'/api/language?code=' + encodeURIComponent(sourceCode)).then(
-                        (data)=> {
-                            console.log(data);
-                            this.$set(this.request, "language", data);
-                        }
+                    (data)=> {
+                        console.log(data);
+                        this.$set(this.request, "language", data);
+                    }
                 );
 
                 // 言語判別ここまで
@@ -177,11 +177,11 @@
                 code = encodeURIComponent(code);
                 lang = encodeURIComponent(lang.toLowerCase());
                 const postCode = axios.get('/api/create?source_code=' + code + '&language=' + lang)
-                        .then(response => {
-                            $('.loading').removeClass('active');
-                            this.result = response.data.stdout;
-                        })
-                        .catch(err => {
+                    .then(response => {
+                        $('.loading').removeClass('active');
+                        this.result = response.data.stdout;
+                    })
+                    .catch(err => {
                     });
                 this.ran = true;
             }
@@ -190,6 +190,10 @@
 </script>
 
 <style lang="scss" scoped>
+    * {
+        padding: 0;
+        width: 100%;
+    }
     .header {
         height: 10%;
         background: skyblue;
@@ -291,24 +295,24 @@
             }
         }
         /*.loading {*/
-            /*display: none;*/
-            /*opacity: 0;*/
-            /*transition: opacity 1s ease;*/
-            /*position: fixed;*/
-            /*width: 600px;*/
-            /*height:600px;*/
-            /*top:0;*/
-            /*bottom:0;*/
-            /*left:0;*/
-            /*right:0;*/
-            /*margin:auto;*/
-            /*img {*/
-                /*width: 100%;*/
-            /*}*/
+        /*display: none;*/
+        /*opacity: 0;*/
+        /*transition: opacity 1s ease;*/
+        /*position: fixed;*/
+        /*width: 600px;*/
+        /*height:600px;*/
+        /*top:0;*/
+        /*bottom:0;*/
+        /*left:0;*/
+        /*right:0;*/
+        /*margin:auto;*/
+        /*img {*/
+        /*width: 100%;*/
+        /*}*/
         /*}*/
         /*.active{*/
-            /*display: block;*/
-            /*opacity: 1;*/
+        /*display: block;*/
+        /*opacity: 1;*/
         /*}*/
     }
 </style>
