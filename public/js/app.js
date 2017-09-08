@@ -42386,6 +42386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -42394,10 +42395,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             youkoso: '',
             request: {
                 source_code: '',
-                language: 'おまかせ'
+                language: ''
             },
             extensions: {},
-            nowExtension: 'hoge',
             result: '',
             writed: false,
             ran: false,
@@ -42416,8 +42416,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     watch: {
         'request.source_code': function requestSource_code(val) {
             document.getElementById("great").currentTime = 0;
-
-            console.log(val);
             if (val === 'すごーい') {
                 document.getElementById('welcome').play();
             }
@@ -42475,7 +42473,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data: '{"url": ' + '"' + imageLink + '"}'
             }).done(function (data) {
                 $('.loading').removeClass('active');
-                console.log();
                 $('#response-textarea').val(_this3.jsonFormatting(data), null, 2);
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 var errorString = errorThrown === '' ? 'Error. ' : errorThrown + ' (' + jqXHR.status + '): ';
@@ -42561,7 +42558,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // ここから言語判別
             $('.loading').addClass('active');
             $.get('http://' + location.hostname + ':' + location.port + '/api/language?code=' + encodeURIComponent(sourceCode)).then(function (data) {
-                console.log(data);
                 _this4.$set(_this4.request, "language", data);
             });
 
@@ -42574,9 +42570,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var blob = new File([text], 'result.txt');
             var downloadLink = document.getElementById('download-link');
             downloadLink.href = window.URL.createObjectURL(blob);
-        },
-        findExtension: function findExtension() {
-            this.nowExtension = this.extensions[this.request.language];
         },
         paizaRun: function paizaRun(code, lang) {
             var _this5 = this;
@@ -42610,7 +42603,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "request.language"
     }],
     on: {
-      "change": [function($event) {
+      "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -42618,7 +42611,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.request.language = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.findExtension]
+      }
     }
   }, _vm._l((_vm.extensions), function(text, val) {
     return _c('option', [_vm._v(_vm._s(text))])
@@ -42647,7 +42640,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "",
       "id": "download-link",
-      "download": _vm.nowExtension === undefined ? 'result.txt' : 'result.' + _vm.nowExtension
+      "download": _vm.request.language === undefined ? 'result.txt' : 'result.' + _vm.request.language
     },
     on: {
       "click": _vm.fileSave
@@ -42689,7 +42682,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "results"
   }, [_vm._v("\n            Result:\n            "), _c('div', {
     staticClass: "result"
-  }, [_vm._v(_vm._s(_vm.result))])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])
+  }, [_vm._v(_vm._s(_vm.result))])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', [_vm._v(_vm._s(_vm.request.language))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('audio', {
     staticStyle: {

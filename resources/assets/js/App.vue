@@ -4,7 +4,7 @@
             <h1>God Paper</h1>
             <ul>
                 <li>
-                    <select v-model="request.language" @change="findExtension">
+                    <select v-model="request.language">
                         <option v-for="(text, val) in extensions">{{ text }}</option>
                     </select>
                 </li>
@@ -16,7 +16,7 @@
                     <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button>
                 </li>
                 <li>
-                    <a href="" id="download-link" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" v-on:click="fileSave">Download</a>
+                    <a href="" id="download-link" :download="request.language === undefined ? 'result.txt' : 'result.' + request.language" v-on:click="fileSave">Download</a>
                 </li>
             </ul>
         </div>
@@ -45,6 +45,7 @@
         <!--<div class="loading">-->
         <!--<img src="/loading.gif" alt="読み込み">-->
         <!--</div>-->
+        <div>{{ request.language }}</div>
     </div>
 </template>
 
@@ -56,10 +57,9 @@
                 youkoso:'',
                 request: {
                     source_code: '',
-                    language: 'おまかせ'
+                    language: ''
                 },
                 extensions: {},
-                nowExtension: 'hoge',
                 result: '',
                 writed: false,
                 ran: false,
@@ -77,8 +77,6 @@
         watch:{
             'request.source_code':(val)=>{
                 document.getElementById("great").currentTime = 0;
-
-                console.log(val);
                 if(val === 'すごーい'){
                     document.getElementById('welcome').play();
                 }
@@ -133,7 +131,6 @@
                 })
                     .done(data => {
                         $('.loading').removeClass('active');
-                        console.log();
                         $('#response-textarea').val(this.jsonFormatting(data), null, 2);
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
@@ -158,7 +155,6 @@
                 $('.loading').addClass('active');
                 $.get('http://'+location.hostname+':'+location.port+'/api/language?code=' + encodeURIComponent(sourceCode)).then(
                     (data)=> {
-                        console.log(data);
                         this.$set(this.request, "language", data);
                     }
                 );
@@ -172,9 +168,6 @@
                 let blob = new File([text], 'result.txt');
                 let downloadLink = document.getElementById('download-link');
                 downloadLink.href = window.URL.createObjectURL(blob);
-            },
-            findExtension() {
-                this.nowExtension = this.extensions[this.request.language];
             },
             paizaRun(code, lang) {
                 $('.loading').addClass('active');
