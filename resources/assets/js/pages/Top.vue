@@ -1,32 +1,47 @@
 <template>
-    <div id="page">
-        <div id="contents">
-            <h1 class="God">God Paper</h1>
-            <div id="form">
-                Language:
-                <select id="select-lang" v-model="request.language" @change="findExtension">
-                    <option v-for="(text,val) in extensions">{{text}}</option>
-                </select>
-                <input type="file" @change="toBlob" id="file-select" :disabled="ran">
-                <button type="button" id="run-btn" v-on:click="paizaRun(request.source_code, request.language)" :disabled="!writed || ran">Running</button>
-                <a href="" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" id="download-link" v-on:click="fileSave">Download</a>
+        <div class="container">
+            <div class="header">
+                <h1>God Paper</h1>
+                <ul>
+                    <li>
+                        <select v-model="request.language" @change="findExtension">
+                            <option v-for="(text, val) in extensions">{{ text }}</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="image-select">Image Select</label>
+                        <input type="file" id="image-select" @change="toBlob">
+                    </li>
+                    <li><button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button></li>
+                    <li><a href="" id="download-link" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" v-on:click="fileSave">Download</a></li>
+                </ul>
             </div>
-            <div id="text-image">
-                <div id="textarea">Response: <textarea id="response-textarea" v-model="request.source_code"></textarea></div>
-                <div id="image"><span>Image:</span><img :src="image" alt=""></div>
+            <div class="content">
+                <div class="sources">
+                    <div class="source-code">
+                        <textarea id="response-data" placeholder="Here your code!" v-model="request.source_code"></textarea>
+                    </div>
+                    <div class="source-image">
+                        <div>
+                            <img :src="image" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="results">
+                    Result:
+                    <div class="result">{{ result }}</div>
+                </div>
             </div>
-            <div id="result">Result: {{ result }}</div>
             <audio style="display:none" id="welcome" preload="auto">
                 <source src="/japari.mp3" type="audio/mp3">
             </audio>
             <audio style="display:none" id="great" preload="auto">
                 <source src="/sugoi.mp3" type="audio/mp3">
             </audio>
-            <div class="loading">
-                <img src="/loading.gif" alt="読み込み">
-            </div>
+            <!--<div class="loading">-->
+            <!--<img src="/loading.gif" alt="読み込み">-->
+            <!--</div>-->
         </div>
-    </div>
 </template>
 
 <script>
@@ -51,7 +66,7 @@
         created() {
             $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
                     (data)=> {
-                        this.$set(this, "extensions", Object.assign({"おまかせ": "おまかせ"}, (data)));
+                        this.$set(this, 'extensions', Object.assign({'おまかせ': 'おまかせ'}, (data)));
                     }
             );
         },
@@ -60,13 +75,20 @@
                 document.getElementById("great").currentTime = 0;
 
                 console.log(val);
-                if(val == "すごーい"){
-                    document.getElementById("welcome").play();
+                if(val === 'すごーい'){
+                    document.getElementById('welcome').play();
                 }
                 document.getElementById("great").play();
             },
         },
         methods: {
+            toBlob() {
+                let blob = document.getElementById('image-select').files[0];
+                let formData = new FormData();
+                formData.append('image', blob);
+                this.uploadImage(formData);
+                this.writed = true;
+            },
             uploadImage(formData) {
                 $('.loading').addClass('active');
                 $.ajax({
@@ -87,13 +109,6 @@
                     processData: false
                 });
             },
-            toBlob() {
-                let blob = document.getElementById('file-select').files[0];
-                let formData = new FormData();
-                formData.append('image', blob);
-                this.uploadImage(formData);
-                this.writed = true;
-            },
             processImage(imageLink) {
                 $('.loading').addClass('active');
                 let subscriptionKey = '548a4be3988240449b841c5ada938667';
@@ -102,7 +117,7 @@
                     language: 'unk',
                     detectOrientation: true
                 };
-                let url = uriBase + "?" + $.param(params);
+                let url = uriBase + '?' + $.param(params);
                 $.ajax({
                     url: url,
                     beforeSend: jqXHR => {
@@ -149,7 +164,7 @@
                 return sourceCode;
             },
             fileSave() {
-                let text = document.getElementById('response-textarea').value;
+                let text = document.getElementById('response-data').value;
                 let blob = new File([text], 'result.txt');
                 let downloadLink = document.getElementById('download-link');
                 downloadLink.href = window.URL.createObjectURL(blob);
@@ -175,82 +190,125 @@
 </script>
 
 <style lang="scss" scoped>
-    .loading{
-        display: none;
-        opacity: 0;
-        transition: opacity 1s ease;
-        position: fixed;
-        width: 600px;
-        height:600px;
-        top:0;
-        bottom:0;
-        left:0;
-        right:0;
-        margin:auto;
-        img {
-            width: 100%;
+    .header {
+        height: 10%;
+        background: skyblue;
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        h1 {
+            margin-right: auto;
+            color: #736d71;
+        }
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+        }
+        li {
+            margin-top: 5px;
+            margin-right: 10px;
+            height: 40px;
+        }
+        select, label, button, a {
+            padding: 10px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            background: #fff;
+            color: #736d71;
+            cursor: pointer;
+        }
+        select {
+            outline: none;
+        }
+        label {
+            font-weight: normal;
+        }
+        #image-select {
+            display: none;
+        }
+        a {
+            display: block;
+            text-decoration: none;
         }
     }
-    .active{
-        display: block;
-        opacity: 1;
-    }
-    h1 {
-        color: #87cefa;
-        font-size: 64px;
-        text-align: center;
-    }
-    #form {
-        width: 50%;
-        padding: 20px;
-        margin: 30px auto;
-        border: 2px #ccc solid;
-        border-radius: 3px;
-        background: #fff;
-        text-align: center;
-    }
-    #select-lang, #file-select, #run-btn {
-        display: inline-block;
-        text-align: center;
-    }
-    #select-lang, #run-btn, #download-link {
-        background: #fff;
-    }
-    #run-btn, #download-link {
-        border-radius: 3px;
-    }
-    #run-btn {
-        padding: 7px 10px;
-        border: 0;
-    }
-    #download-link {
-        text-decoration: none;
-        padding: 10px;
-        color: #636b6f
-    }
-    #response-textarea {
-        display: block;
-        width: 500px;
-        height: 300px;
-        font-size: 20px;
-        margin: 0 auto;
-        border: 2px solid #ccc;
-        border-radius: 3px;
-    }
-    #text-image{
-        width: 33%;
-        margin: 0 auto;
-    }
-    #result {
-        margin: 0 auto;
-        margin-top: 30px;
-        width: 500px;
-        height: 300px;
-        border: 2px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-    }
-    span {
-        display: block;
+    .content {
+        height: 90%;
+        background: red;
+        .sources {
+            margin: 0 auto;
+            padding: 0;
+            width: 70%;
+            height: 70%;
+            background: blue;
+            font-size: 0;
+            .source-code {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                width: 50%;
+                height: 100%;
+                background: yellow;
+                textarea {
+                    display: block;
+                    margin: 0;
+                    padding: 0;
+                    outline: none;
+                    border: 0;
+                    width: 100%;
+                    height: 100%;
+                    resize: none;
+                    font-size: 16px;
+                }
+            }
+            .source-image {
+                display: inline-block;
+                margin: 0;
+                padding: 20px;
+                width: 50%;
+                height: 100%;
+                background: green;
+                img {
+                    display: block;
+                    height: auto;
+                    max-height: 100%;
+                    width: auto;
+                    max-width: 100%;
+                    margin: 0 auto;
+                }
+            }
+        }
+        .results {
+            margin: 0 auto;
+            padding: 0;
+            width: 70%;
+            height: 30%;
+            background: orange;
+            .result {
+                background: #fff;
+                height: 80%;
+                word-wrap: break-word;
+            }
+        }
+        /*.loading {*/
+            /*display: none;*/
+            /*opacity: 0;*/
+            /*transition: opacity 1s ease;*/
+            /*position: fixed;*/
+            /*width: 600px;*/
+            /*height:600px;*/
+            /*top:0;*/
+            /*bottom:0;*/
+            /*left:0;*/
+            /*right:0;*/
+            /*margin:auto;*/
+            /*img {*/
+                /*width: 100%;*/
+            /*}*/
+        /*}*/
+        /*.active{*/
+            /*display: block;*/
+            /*opacity: 1;*/
+        /*}*/
     }
 </style>
