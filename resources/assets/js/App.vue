@@ -45,7 +45,6 @@
         <!--<div class="loading">-->
         <!--<img src="/loading.gif" alt="読み込み">-->
         <!--</div>-->
-        <div>{{ request.language }}</div>
     </div>
 </template>
 
@@ -191,14 +190,15 @@
         width: 100%;
     }
     .header {
-        height: 10%;
-        background: skyblue;
         display: flex;
         align-items: center;
         padding: 15px;
+        height: 10%;
+        border-bottom: 1px solid #000;
+        background: #fdd695;
         h1 {
             margin-right: auto;
-            color: #736d71;
+            color: #6b4318;
         }
         ul {
             display: flex;
@@ -214,9 +214,14 @@
             padding: 10px;
             border: 1px solid #666;
             border-radius: 5px;
-            background: #fff;
+            background: #fdf4e8;
             color: #736d71;
             cursor: pointer;
+            transition: 0.4s;
+        }
+        select:hover, label:hover, button:hover, a:hover {
+            background: #6b4318;
+            color: #fdf4e8;
         }
         select, button {
             outline: none;
@@ -242,13 +247,12 @@
     }
     .content {
         height: 90%;
-        background: red;
+        background: #fdd695;
         .sources {
             margin: 0 auto;
             padding: 0;
             width: 70%;
             height: 70%;
-            background: blue;
             font-size: 0;
             .source-code {
                 display: inline-block;
@@ -256,7 +260,6 @@
                 padding: 0;
                 width: 50%;
                 height: 100%;
-                background: yellow;
                 textarea {
                     display: block;
                     margin: 0;
@@ -266,6 +269,8 @@
                     width: 100%;
                     height: 100%;
                     resize: none;
+                    border-radius: 5px;
+                    background: #fdf4e8;
                     font-size: 16px;
                 }
             }
@@ -275,7 +280,6 @@
                 padding: 20px;
                 width: 50%;
                 height: 100%;
-                background: green;
                 img {
                     display: block;
                     height: auto;
@@ -291,10 +295,10 @@
             padding: 0;
             width: 70%;
             height: 30%;
-            background: orange;
             .result {
-                background: #fff;
+                background: #fdf4e8;
                 height: 80%;
+                border-radius: 5px;
                 word-wrap: break-word;
             }
         }
