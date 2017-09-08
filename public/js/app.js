@@ -42392,10 +42392,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             image: '',
-            youkoso: '',
             request: {
                 source_code: '',
-                language: ''
+                language: 'おまかせ'
             },
             extensions: {},
             result: '',
@@ -42640,7 +42639,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "",
       "id": "download-link",
-      "download": _vm.request.language === undefined ? 'result.txt' : 'result.' + _vm.request.language
+      "download": _vm.request.language === undefined || 'おまかせ' ? 'result.txt' : 'result.' + _vm.request.language
     },
     on: {
       "click": _vm.fileSave

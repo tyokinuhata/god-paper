@@ -16,7 +16,7 @@
                     <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button>
                 </li>
                 <li>
-                    <a href="" id="download-link" :download="request.language === undefined ? 'result.txt' : 'result.' + request.language" v-on:click="fileSave">Download</a>
+                    <a href="" id="download-link" :download="request.language === undefined || 'おまかせ' ? 'result.txt' : 'result.' + request.language" v-on:click="fileSave">Download</a>
                 </li>
             </ul>
         </div>
@@ -54,10 +54,9 @@
         data() {
             return {
                 image: '',
-                youkoso:'',
                 request: {
                     source_code: '',
-                    language: ''
+                    language: 'おまかせ'
                 },
                 extensions: {},
                 result: '',
