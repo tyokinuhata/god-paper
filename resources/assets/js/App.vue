@@ -12,8 +12,12 @@
                     <label for="image-select">Image Select</label>
                     <input type="file" id="image-select" @change="toBlob">
                 </li>
-                <li><button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button></li>
-                <li><a href="" id="download-link" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" v-on:click="fileSave">Download</a></li>
+                <li>
+                    <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button>
+                </li>
+                <li>
+                    <a href="" id="download-link" :download="nowExtension === undefined ? 'result.txt' : 'result.' + nowExtension" v-on:click="fileSave">Download</a>
+                </li>
             </ul>
         </div>
         <div class="content">
@@ -207,12 +211,12 @@
         ul {
             display: flex;
             list-style: none;
-            margin: 0;
+            width: 400px;
         }
         li {
             margin-top: 5px;
-            margin-right: 10px;
             height: 40px;
+            margin-right: 10px;
         }
         select, label, button, a {
             padding: 10px;
@@ -222,17 +226,25 @@
             color: #736d71;
             cursor: pointer;
         }
-        select {
+        select, button {
             outline: none;
+        }
+        select {
+            width: 90px;
         }
         label {
             font-weight: normal;
+            width: 110px;
         }
         #image-select {
             display: none;
         }
+        button {
+            width: 50px;
+        }
         a {
             display: block;
+            width: 90px;
             text-decoration: none;
         }
     }
