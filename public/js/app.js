@@ -42368,7 +42368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             image: '',
             request: {
                 source_code: '',
-                language: 'おまかせ'
+                language: 'auto'
             },
             extensions: {},
             result: '',
@@ -42382,7 +42382,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         $.get('http://' + location.hostname + ':' + location.port + '/api/languagelist').then(function (data) {
-            _this.$set(_this, 'extensions', Object.assign({ 'おまかせ': 'おまかせ' }, data));
+            _this.$set(_this, 'extensions', Object.assign({ 'auto': 'auto' }, data));
         });
     },
 
@@ -42613,7 +42613,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "",
       "id": "download-link",
-      "download": _vm.request.language === undefined || 'おまかせ' ? 'result.txt' : 'result.' + _vm.request.language
+      "download": _vm.request.language === undefined || 'auto' ? 'result.txt' : 'result.' + _vm.request.language
     },
     on: {
       "click": _vm.fileSave

@@ -16,7 +16,7 @@
                     <button type="button" v-on:click="paizaRun(request.source_code, request.language)">Run</button>
                 </li>
                 <li>
-                    <a href="" id="download-link" :download="request.language === undefined || 'おまかせ' ? 'result.txt' : 'result.' + request.language" v-on:click="fileSave">Download</a>
+                    <a href="" id="download-link" :download="request.language === undefined || 'auto' ? 'result.txt' : 'result.' + request.language" v-on:click="fileSave">Download</a>
                 </li>
             </ul>
         </div>
@@ -55,7 +55,7 @@
                 image: '',
                 request: {
                     source_code: '',
-                    language: 'おまかせ'
+                    language: 'auto'
                 },
                 extensions: {},
                 result: '',
@@ -68,7 +68,7 @@
         created() {
             $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
                 (data)=> {
-                    this.$set(this, 'extensions', Object.assign({'おまかせ': 'おまかせ'}, (data)));
+                    this.$set(this, 'extensions', Object.assign({'auto': 'auto'}, (data)));
                 }
             );
         },
