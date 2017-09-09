@@ -194,7 +194,7 @@
         align-items: center;
         padding: 15px;
         height: 10%;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid #666;
         background: #fdd695;
         h1 {
             margin-right: auto;
@@ -257,9 +257,10 @@
             .source-code {
                 display: inline-block;
                 margin: 0;
+                margin-bottom: 50px;
                 padding: 0;
                 width: 50%;
-                height: 100%;
+                height: 80%;
                 textarea {
                     display: block;
                     margin: 0;
@@ -295,6 +296,7 @@
             padding: 0;
             width: 70%;
             height: 30%;
+            font-size: 16px;
             .result {
                 background: #fdf4e8;
                 height: 80%;
