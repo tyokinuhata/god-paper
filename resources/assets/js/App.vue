@@ -111,7 +111,7 @@
             },
             processImage(imageLink) {
                 $('.loading').addClass('active');
-                let subscriptionKey = '548a4be3988240449b841c5ada938667';
+                let subscriptionKey = 'b4f279379da94eb4bcb86763805b6098';
                 let uriBase = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr';
                 let params = {
                     language: 'unk',
