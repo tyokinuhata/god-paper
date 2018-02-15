@@ -43500,7 +43500,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        $.get('http://' + location.hostname + ':' + location.port + '/api/languagelist').then(function (data) {
+        //            $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
+        $.get('http://' + location.hostname + '/api/languagelist').then(function (data) {
             _this.$set(_this, 'extensions', Object.assign({ 'auto': 'auto' }, data));
         });
     },
