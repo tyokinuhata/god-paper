@@ -43501,7 +43501,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         //            $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
-        $.get('http://' + location.hostname + '/api/languagelist').then(function (data) {
+        $.get('https://' + location.hostname + '/api/languagelist').then(function (data) {
             _this.$set(_this, 'extensions', Object.assign({ 'auto': 'auto' }, data));
         });
     },

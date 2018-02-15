@@ -67,7 +67,7 @@
         },
         created() {
 //            $.get('http://'+location.hostname+':'+location.port+'/api/languagelist').then(
-            $.get('http://'+location.hostname+'/api/languagelist').then(
+            $.get('https://'+location.hostname+'/api/languagelist').then(
                 (data)=> {
                     this.$set(this, 'extensions', Object.assign({'auto': 'auto'}, (data)));
                 }
