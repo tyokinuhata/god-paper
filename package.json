@@ -19,6 +19,9 @@
         "vue": "^2.5.13"
     },
     "dependencies": {
+        "gulp": "^3.9.1",
+        "gulp-clean-css": "^3.9.2",
+        "gulp-uglify": "^3.0.0",
         "vue-router": "^2.8.1"
     }
 }
